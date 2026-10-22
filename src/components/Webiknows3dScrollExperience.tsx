@@ -535,7 +535,11 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
       duration: 2.5,
     });
 
-    // 8. MOUSE PARALLAX TRACKING
+    // Smooth camera state vectors for exponential damping across all devices
+    const currentCamPos = new THREE.Vector3(-1.0, 0.8, 16);
+    const currentLookAt = new THREE.Vector3(1.8, 0.2, -2);
+
+    // 8. MOUSE & TOUCH PARALLAX TRACKING
     const targetMouse = { x: 0, y: 0 };
     const currentMouse = { x: 0, y: 0 };
 
@@ -546,7 +550,7 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // 9. RENDER LOOP WITH PHYSICAL DAMPING & POST-PROCESSING
+    // 9. RENDER LOOP WITH EXPONENTIAL PHYSICAL DAMPING & KINEMATICS
     let animationFrameId: number;
     const clock = new THREE.Clock();
 
@@ -558,31 +562,39 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
       currentMouse.x += (targetMouse.x - currentMouse.x) * 0.05;
       currentMouse.y += (targetMouse.y - currentMouse.y) * 0.05;
 
-      // Apply camera position and orientation with subtle mouse parallax
-      camera.position.set(
-        camState.x + currentMouse.x * 0.6,
-        camState.y - currentMouse.y * 0.4,
-        camState.z
-      );
-      camera.lookAt(
-        camState.lookX + currentMouse.x * 0.4,
-        camState.lookY - currentMouse.y * 0.3,
-        camState.lookZ
-      );
+      // Exponential damping for silky smooth camera transitions across all devices
+      const targetX = camState.x + currentMouse.x * 0.4;
+      const targetY = camState.y - currentMouse.y * 0.3;
+      const targetZ = camState.z;
 
-      // Dynamic Depth-of-Field focal pull as camera moves
+      const targetLookX = camState.lookX + currentMouse.x * 0.2;
+      const targetLookY = camState.lookY - currentMouse.y * 0.2;
+      const targetLookZ = camState.lookZ;
+
+      currentCamPos.x += (targetX - currentCamPos.x) * 0.08;
+      currentCamPos.y += (targetY - currentCamPos.y) * 0.08;
+      currentCamPos.z += (targetZ - currentCamPos.z) * 0.08;
+
+      currentLookAt.x += (targetLookX - currentLookAt.x) * 0.08;
+      currentLookAt.y += (targetLookY - currentLookAt.y) * 0.08;
+      currentLookAt.z += (targetLookZ - currentLookAt.z) * 0.08;
+
+      camera.position.set(currentCamPos.x, currentCamPos.y, currentCamPos.z);
+      camera.lookAt(currentLookAt.x, currentLookAt.y, currentLookAt.z);
+
+      // Dynamic Depth-of-Field focal pull
       if (bokehPass) {
-        const distanceToTarget = Math.abs(camera.position.z - camState.lookZ);
+        const distanceToTarget = Math.abs(currentCamPos.z - currentLookAt.z);
         (bokehPass.uniforms as Record<string, THREE.IUniform>)['focus'].value = Math.max(distanceToTarget, 2.0);
       }
 
       // Light positioning
       keyLight.position.set(
-        camState.x + 10 + currentMouse.x * 2,
-        camState.y + 12 - currentMouse.y * 2,
-        camState.z + 8
+        currentCamPos.x + 10 + currentMouse.x * 2,
+        currentCamPos.y + 12 - currentMouse.y * 2,
+        currentCamPos.z + 8
       );
-      keyLight.target.position.set(camState.lookX, camState.lookY, camState.lookZ);
+      keyLight.target.position.set(currentLookAt.x, currentLookAt.y, currentLookAt.z);
       keyLight.target.updateMatrixWorld();
       keyLight.color.setRGB(camState.keyLightR, camState.keyLightG, camState.keyLightB);
       keyLight.intensity = camState.keyIntensity;
@@ -615,13 +627,15 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
 
     tick();
 
-    // 10. RESIZE OBSERVER
+    // 10. RESIZE OBSERVER WITH RESPONSIVE FOV
     let resizeRafId: number | null = null;
     const handleResize = () => {
       if (resizeRafId !== null) cancelAnimationFrame(resizeRafId);
       resizeRafId = requestAnimationFrame(() => {
         const width = window.innerWidth;
         const height = window.innerHeight;
+        // Responsive camera FOV for mobile / tablet / desktop
+        camera.fov = width < 768 ? 58 : 48;
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
         renderer.setSize(width, height);
@@ -633,6 +647,7 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
     };
 
     window.addEventListener('resize', handleResize);
+    handleResize();
 
     let roRafId: number | null = null;
     const resizeObserver = new ResizeObserver(() => {
@@ -694,123 +709,10 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
     };
   }, [theme]);
 
-  // State for HUD active waypoint & collapse, plus scroll opacity
-  const [activeWaypoint, setActiveWaypoint] = React.useState<number>(0);
-  const [isHudCollapsed, setIsHudCollapsed] = React.useState<boolean>(false);
-  const [canvasOpacity, setCanvasOpacity] = React.useState<number>(1);
-
-  useEffect(() => {
-    const handleWaypointChange = (e: Event) => {
-      const customEvent = e as CustomEvent;
-      if (customEvent.detail && typeof customEvent.detail.index === 'number') {
-        setActiveWaypoint(customEvent.detail.index);
-      }
-    };
-    window.addEventListener('3d-waypoint-change', handleWaypointChange);
-    return () => window.removeEventListener('3d-waypoint-change', handleWaypointChange);
-  }, []);
-
-  useEffect(() => {
-    const handleScrollFade = () => {
-      // Keep 3D WebGL background persistent (0.85 opacity) so it stays linked with all sections
-      setCanvasOpacity(0.85);
-    };
-
-    window.addEventListener('scroll', handleScrollFade, { passive: true });
-    handleScrollFade();
-    return () => window.removeEventListener('scroll', handleScrollFade);
-  }, []);
-
-  const waypoints = [
-    { index: 0, label: '01 Silicon Core', title: 'Web Architecture', icon: '</>' },
-    { index: 1, label: '02 AI Gyro', title: 'Neural Core', icon: '🧠' },
-    { index: 2, label: '03 Cloud Blades', title: 'DevOps Monolith', icon: '☁️' },
-    { index: 3, label: '04 Glass Stack', title: 'Design System', icon: '🎨' },
-    { index: 4, label: '05 Horizon', title: 'Global Ecosystem', icon: '📊' },
-  ];
-
-  const flyToWaypoint = (index: number) => {
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    if (maxScroll <= 0) return;
-    const ratios = [0.0, 0.25, 0.50, 0.75, 1.0];
-    const targetY = maxScroll * ratios[index];
-    window.scrollTo({ top: targetY, behavior: 'smooth' });
-  };
-
   return (
-    <>
-      {/* Fixed Background Three.js WebGL Canvas with Smooth Scroll Fade */}
-      <div
-        ref={containerRef}
-        style={{ opacity: canvasOpacity, transition: 'opacity 0.5s ease-out' }}
-        className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
-      />
-
-      {/* Floating Sleek 3D Camera Waypoint Quick-Nav Dock */}
-      <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-30 pointer-events-auto flex flex-col items-center gap-1.5 transition-all duration-300 max-w-[94vw]">
-        {/* Toggle Collapse Pill */}
-        <button
-          onClick={() => setIsHudCollapsed(!isHudCollapsed)}
-          className={`px-3.5 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-full border backdrop-blur-xl transition-all shadow-md cursor-pointer flex items-center gap-1.5 ${
-            theme === 'dark'
-              ? 'bg-neutral-900/90 border-neutral-700/80 text-neutral-300 hover:text-white hover:border-rose-800'
-              : 'bg-white/90 border-neutral-300 text-neutral-700 hover:text-rose-900 hover:border-rose-900 shadow-sm'
-          }`}
-        >
-          <span>{isHudCollapsed ? '▲ Show 3D Navigation' : '▼ 3D Viewport Controls'}</span>
-        </button>
-
-        {/* Horizontal Waypoints Dock */}
-        {!isHudCollapsed && (
-          <div
-            className={`flex items-center gap-1.5 p-1.5 sm:p-2 rounded-2xl border backdrop-blur-2xl shadow-2xl transition-all ${
-              theme === 'dark'
-                ? 'bg-[#0B0B0E]/90 border-neutral-800/90 shadow-black/80 ring-1 ring-white/5'
-                : 'bg-white/95 border-neutral-200/90 shadow-rose-900/10 ring-1 ring-black/5'
-            }`}
-          >
-            {waypoints.map((wp) => {
-              const isActive = activeWaypoint === wp.index;
-
-              return (
-                <button
-                  key={wp.index}
-                  onClick={() => flyToWaypoint(wp.index)}
-                  className={`relative px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-left transition-all duration-200 cursor-pointer flex items-center gap-2 border ${
-                    isActive
-                      ? 'bg-rose-900 text-white border-rose-800 shadow-lg shadow-rose-900/30'
-                      : theme === 'dark'
-                      ? 'bg-neutral-900/50 border-neutral-800/60 text-neutral-400 hover:text-white hover:bg-neutral-800/80 hover:border-neutral-700'
-                      : 'bg-neutral-100/80 border-neutral-200/80 text-neutral-700 hover:text-neutral-950 hover:bg-neutral-200/80'
-                  }`}
-                  title={`Fly 3D Camera to ${wp.title}`}
-                >
-                  <span className="text-xs">{wp.icon}</span>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-mono font-bold leading-tight uppercase">
-                      {wp.label}
-                    </span>
-                    <span
-                      className={`text-[9px] font-medium hidden md:inline-block leading-tight truncate ${
-                        isActive ? 'text-rose-200' : 'text-neutral-500 dark:text-neutral-400'
-                      }`}
-                    >
-                      {wp.title}
-                    </span>
-                  </div>
-
-                  {isActive && (
-                    <span className="relative flex h-1.5 w-1.5 ml-1">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </>
+    <div
+      ref={containerRef}
+      className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
+    />
   );
 };
