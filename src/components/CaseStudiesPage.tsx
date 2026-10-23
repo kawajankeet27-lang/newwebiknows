@@ -6,6 +6,7 @@ import { SpotlightCard } from './SpotlightCard';
 import { PixyRollingText } from './PixyRollingText';
 import { PixyBorderBeam } from './PixyBorderBeam';
 import { GsapMagneticButton } from './GsapMagneticButton';
+import { GsapTextEffect } from './GsapTextEffect';
 import { ArrowRight, Layers, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -155,73 +156,115 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
     ? CASE_STUDIES
     : CASE_STUDIES.filter(cs => cs.category === activeCategory);
 
+  const isDark = theme === 'dark';
+  const displayedStudies = isStandalone ? filteredStudies : filteredStudies.slice(0, 3);
+
   return (
-    <section className={`${isStandalone ? 'pt-28 pb-20 sm:pt-32 sm:pb-24' : 'py-24'} transition-colors duration-300 bg-white/20 dark:bg-[#080808]/20 backdrop-blur-sm border-y border-white/10 dark:border-white/5 relative z-10 ${
+    <section className={`${isStandalone ? 'pt-28 pb-20 sm:pt-32 sm:pb-24' : 'py-20'} transition-colors duration-300 bg-transparent relative z-10 ${
       theme === 'dark' ? 'text-white' : 'text-neutral-950'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Page Header */}
-        <motion.div
-          className={`max-w-3xl space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-xl border shadow-xl ${
-            theme === 'dark'
-              ? 'bg-neutral-950/80 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
-              : 'bg-white/85 border-neutral-200/90 shadow-rose-900/10 ring-1 ring-black/5'
-          }`}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-900">
-            <span>02. Case Studies & Proof</span>
-            <span aria-hidden="true">·</span>
-            <span>Client Impact</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-balance">
-            Proven Case Studies & Client Proof.
-          </h1>
-          <p className={`text-base sm:text-lg leading-relaxed ${
-            theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
-          }`}>
-            Explore our featured engineering case studies highlighting the industry focus, core technology stack, and full project overview.
-          </p>
-        </motion.div>
-
-        {/* Category Filter Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto py-2 my-8 border-b border-neutral-200 dark:border-neutral-800/40 no-scrollbar">
-          {categories.map(cat => (
-            <motion.button
-              key={cat}
-              whileTap={{ scale: 0.96 }}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap cursor-pointer ${
-                activeCategory === cat
-                  ? 'bg-rose-900 text-white shadow-md shadow-rose-900/30'
-                  : theme === 'dark'
-                  ? 'bg-neutral-900 border border-neutral-800 text-neutral-400 hover:text-white'
-                  : 'bg-neutral-100 border border-neutral-200 text-neutral-700 hover:text-neutral-950 hover:bg-neutral-200'
+        {/* On home page, use asymmetric split layout so 3D scene remains completely visible and interactive */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          
+          {/* Content Column (7 cols): Header, Filter Tabs & Case Studies */}
+          <div className={`${isStandalone ? 'lg:col-span-12' : 'lg:col-span-7'} space-y-6`}>
+            
+            {/* Page Header (Opaque High-Contrast Glass) */}
+            <motion.div
+              className={`space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border shadow-xl ${
+                isDark
+                  ? 'bg-neutral-950/95 border-neutral-800/90 shadow-black/80 ring-1 ring-white/10'
+                  : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/10 ring-1 ring-black/5'
               }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              {cat}
-            </motion.button>
-          ))}
-        </div>
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 font-mono">
+                <span>02. Case Studies & Proof</span>
+                <span aria-hidden="true">·</span>
+                <span>Client Impact</span>
+              </div>
+              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance">
+                <GsapTextEffect text="Proven Case Studies & Client Proof." tag="span" />
+              </h1>
+              <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
+                isDark ? 'text-neutral-300' : 'text-neutral-600'
+              }`}>
+                Explore our featured engineering case studies highlighting the industry focus, core technology stack, and full project overview.
+              </p>
+            </motion.div>
 
-        {/* Redesigned Clean Case Studies Grid */}
-        <motion.div layout className="grid md:grid-cols-2 gap-8 my-8">
-          <AnimatePresence>
-            {filteredStudies.map((study, idx) => (
-              <CaseStudyCard
-                key={study.id}
-                study={study}
-                theme={theme}
-                onClick={() => setSelectedCaseStudy(study)}
-                idx={idx}
-              />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+            {/* Category Filter Tabs */}
+            <div className="flex items-center gap-2 overflow-x-auto py-2 border-b border-neutral-200/60 dark:border-neutral-800/40 no-scrollbar">
+              {categories.map(cat => (
+                <motion.button
+                  key={cat}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all whitespace-nowrap cursor-pointer backdrop-blur-sm ${
+                    activeCategory === cat
+                      ? 'bg-rose-900 text-white shadow-md shadow-rose-900/30'
+                      : isDark
+                      ? 'bg-neutral-900/70 border border-neutral-800 text-neutral-400 hover:text-white'
+                      : 'bg-white/70 border border-neutral-200/80 text-neutral-700 hover:text-neutral-950 hover:bg-white'
+                  }`}
+                >
+                  {cat}
+                </motion.button>
+              ))}
+            </div>
+
+            {/* Case Studies Feed / Grid */}
+            <motion.div
+              layout
+              className={isStandalone ? 'grid md:grid-cols-2 gap-8' : 'space-y-6'}
+            >
+              <AnimatePresence>
+                {displayedStudies.map((study, idx) => (
+                  <CaseStudyCard
+                    key={study.id}
+                    study={study}
+                    theme={theme}
+                    onClick={() => setSelectedCaseStudy(study)}
+                    idx={idx}
+                  />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+
+            {/* View All Button when in embedded home mode - Opaque High-Contrast Card Container */}
+            {!isStandalone && (
+              <div className="pt-2">
+                <div className={`p-4 sm:p-5 rounded-2xl border shadow-xl backdrop-blur-2xl transition-all ${
+                  isDark
+                    ? 'bg-neutral-950/95 border-neutral-800/90 shadow-black/60'
+                    : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-950/10'
+                }`}>
+                  <button
+                    onClick={() => {
+                      setCurrentPage('casestudies');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="w-full py-4 px-6 rounded-xl bg-rose-900 hover:bg-rose-950 text-white font-extrabold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2.5 cursor-pointer shadow-lg shadow-rose-900/30 active:scale-98"
+                  >
+                    <span>Explore All 12+ Production Case Studies</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Right Column (5 cols): Open space reserved for 3D scene */}
+          {!isStandalone && (
+            <div className="hidden lg:block lg:col-span-5 pointer-events-none min-h-[300px]" />
+          )}
+
+        </div>
 
         {/* Case Study Full Modal */}
         <CaseStudyModal

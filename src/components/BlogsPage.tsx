@@ -3,6 +3,7 @@ import { BlogPost, Theme } from '../types';
 import { BLOG_POSTS } from '../data/agencyData';
 import { BlogModal } from './BlogModal';
 import { SpotlightCard } from './SpotlightCard';
+import { GsapTextEffect } from './GsapTextEffect';
 import { Search, Clock, ArrowRight, BookOpen, Tag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -26,31 +27,31 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ theme }) => {
   });
 
   return (
-    <section className={`pt-28 pb-20 sm:pt-32 sm:pb-24 transition-colors duration-300 bg-white/20 dark:bg-[#080808]/20 backdrop-blur-sm border-y border-white/10 dark:border-white/5 relative z-10 ${
+    <section className={`pt-28 pb-20 sm:pt-32 sm:pb-24 transition-colors duration-300 bg-transparent relative z-10 ${
       theme === 'dark' ? 'text-white' : 'text-neutral-950'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Header */}
         <motion.div
-          className={`max-w-3xl space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-xl border shadow-xl ${
+          className={`max-w-3xl space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border shadow-xl ${
             theme === 'dark'
-              ? 'bg-neutral-950/80 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
-              : 'bg-white/85 border-neutral-200/90 shadow-rose-900/10 ring-1 ring-black/5'
+              ? 'bg-neutral-950/95 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
+              : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/5 ring-1 ring-black/5'
           }`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-900">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 font-mono">
             <span>05. Industry Insights & Engineering Blogs</span>
             <span aria-hidden="true">·</span>
             <span>Knowledge Base</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-balance">
-            Technical Insights on Figma Systems & Custom CRMs.
+          <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance text-neutral-900 dark:text-white">
+            <GsapTextEffect text="Technical Insights on Figma Systems & Custom CRMs." tag="span" />
           </h1>
-          <p className={`text-base sm:text-lg leading-relaxed ${
+          <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
             theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
           }`}>
             Read our engineering articles on tokenized design systems, custom pipeline webhooks, and 60fps React micro-interactions.

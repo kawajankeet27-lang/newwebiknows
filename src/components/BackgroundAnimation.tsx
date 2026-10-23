@@ -118,12 +118,12 @@ export const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({ theme 
         }`}
       />
 
-      {/* Subtle radial vignette */}
+      {/* Low-density, ultra-subtle radial contrast that preserves 100% 3D scene visibility */}
       <div
-        className={`absolute inset-0 ${
+        className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${
           isDark
-            ? 'bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(8,8,8,0.9)_100%)]'
-            : 'bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(255,255,255,0.75)_100%)]'
+            ? 'bg-[radial-gradient(ellipse_at_center,transparent_60%,rgba(11,15,25,0.35)_100%)]'
+            : 'bg-[radial-gradient(ellipse_at_center,transparent_70%,rgba(241,245,249,0.30)_100%)]'
         }`}
       />
     </div>

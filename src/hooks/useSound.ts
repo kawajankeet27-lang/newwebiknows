@@ -6,16 +6,28 @@ class SoundManager {
   private enabled: boolean = true;
 
   constructor() {
-    // Load preference
-    const saved = localStorage.getItem('kinetix_sound_enabled');
-    if (saved !== null) {
-      this.enabled = saved === 'true';
+    // Safely load preference with iframe/sandbox protection
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const saved = window.localStorage.getItem('kinetix_sound_enabled');
+        if (saved !== null) {
+          this.enabled = saved === 'true';
+        }
+      }
+    } catch {
+      // Storage access blocked in sandboxed iframe; retain default enabled
     }
   }
 
   public setEnabled(val: boolean) {
     this.enabled = val;
-    localStorage.setItem('kinetix_sound_enabled', String(val));
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.setItem('kinetix_sound_enabled', String(val));
+      }
+    } catch {
+      // Storage access blocked in sandboxed iframe
+    }
   }
 
   public isEnabled(): boolean {

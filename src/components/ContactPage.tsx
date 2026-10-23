@@ -3,6 +3,7 @@ import { Theme } from '../types';
 import { useCms } from '../context/CmsContext';
 import { Mail, Phone, MapPin, Calendar, Clock, Send, CheckCircle2, Sparkles, MessageSquare, ShieldCheck, AlertCircle, Check, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { GsapTextEffect } from './GsapTextEffect';
 import { CaptchaField } from './CaptchaField';
 
 interface ContactPageProps {
@@ -247,22 +248,26 @@ export const ContactPage: React.FC<ContactPageProps> = ({ theme }) => {
   const hasFormErrors = submitAttempted && Object.values(errors).some(err => Boolean(err));
 
   return (
-    <section className={`pt-28 pb-20 sm:pt-32 sm:pb-24 transition-colors duration-300 bg-white/20 dark:bg-[#080808]/20 backdrop-blur-sm border-y border-white/10 dark:border-white/5 relative z-10 ${
+    <section className={`pt-28 pb-20 sm:pt-32 sm:pb-24 transition-colors duration-300 bg-transparent relative z-10 ${
       theme === 'dark' ? 'text-white' : 'text-neutral-950'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Header */}
-        <div className="max-w-3xl space-y-4">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-900">
+        <div className={`max-w-3xl space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border shadow-xl ${
+          theme === 'dark'
+            ? 'bg-neutral-950/95 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
+            : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/5 ring-1 ring-black/5'
+        }`}>
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 font-mono">
             <span>06. Contact & Consultation</span>
             <span aria-hidden="true">·</span>
             <span>Get In Touch</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-balance">
-            Let’s Build Your Figma System or Custom CRM Engine.
+          <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance text-neutral-900 dark:text-white">
+            <GsapTextEffect text="Let’s Build Your Figma System or Custom CRM Engine." tag="span" />
           </h1>
-          <p className={`text-base sm:text-lg leading-relaxed ${
+          <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
             theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'
           }`}>
             Book a 30-minute discovery call with our design architects or submit a project inquiry below.
@@ -274,8 +279,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ theme }) => {
           
           {/* Left Column: Direct Inquiry Form */}
           <div className="lg:col-span-7">
-            <div className={`p-6 sm:p-8 rounded-2xl border transition-all ${
-              theme === 'dark' ? 'bg-[#0F0F12] border-neutral-800' : 'bg-neutral-50 border-neutral-200'
+            <div className={`p-6 sm:p-8 rounded-3xl border transition-all ${
+              theme === 'dark' ? 'bg-[#0F0F12] border-neutral-800' : 'bg-white border-neutral-200 shadow-xl'
             }`}>
               <div className="flex items-center justify-between gap-4 mb-6">
                 <div>
@@ -629,8 +634,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ theme }) => {
 
           {/* Right Column: Interactive Consultation Scheduler */}
           <div className="lg:col-span-5 space-y-6">
-            <div className={`p-4 sm:p-6 lg:p-8 rounded-2xl border ${
-              theme === 'dark' ? 'bg-[#0F0F12] border-neutral-800' : 'bg-neutral-50 border-neutral-200'
+            <div className={`p-4 sm:p-6 lg:p-8 rounded-3xl border ${
+              theme === 'dark' ? 'bg-[#0F0F12] border-neutral-800' : 'bg-white border-neutral-200 shadow-xl'
             }`}>
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-900">
                 <Calendar className="w-4 h-4" />

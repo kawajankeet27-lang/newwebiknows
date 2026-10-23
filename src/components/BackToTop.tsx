@@ -64,7 +64,7 @@ export const BackToTop: React.FC<BackToTopProps> = ({ theme = 'dark' }) => {
           className={`fixed bottom-6 right-6 z-40 flex items-center justify-center w-12 h-12 rounded-full shadow-2xl cursor-pointer group backdrop-blur-md transition-colors ${
             theme === 'dark'
               ? 'bg-neutral-900/90 text-white border border-neutral-800 hover:bg-neutral-800'
-              : 'bg-white/90 text-neutral-900 border border-neutral-200 hover:bg-neutral-100 shadow-neutral-300/50'
+              : 'bg-white text-neutral-900 border border-neutral-200 hover:bg-neutral-100 shadow-xl'
           }`}
           aria-label="Back to top"
         >

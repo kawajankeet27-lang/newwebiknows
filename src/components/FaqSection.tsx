@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Theme, Page } from '../types';
 import { useCms } from '../context/CmsContext';
 import { ChevronDown, HelpCircle, Sparkles } from 'lucide-react';
+import { GsapTextEffect } from './GsapTextEffect';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface FaqSectionProps {
@@ -105,51 +106,93 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ theme, setCurrentPage })
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 55 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: false, margin: '-60px' }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
           className="space-y-12"
         >
-          {/* Section Header */}
-          <div className={`max-w-3xl space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-xl border shadow-xl ${
-            theme === 'dark'
-              ? 'bg-neutral-950/80 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
-              : 'bg-white/85 border-neutral-200/90 shadow-rose-900/10 ring-1 ring-black/5'
-          }`}>
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-900 font-mono">
-              <HelpCircle className="w-4 h-4" />
-              <span>07. Client Knowledge & Process</span>
-              <span aria-hidden="true">·</span>
-              <span>Common Inquiries</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-balance">
-              Frequently Asked Questions.
-            </h2>
-            <p className={`text-base sm:text-lg leading-relaxed ${
-              theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
-            }`}>
-              Everything you need to know about our Figma tokenization, custom CRM engineering, and IP ownership.
-            </p>
-          </div>
-
           {/* 12-Column Responsive Alignment Grid */}
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-            {/* Accordion Questions Column (8 cols) */}
-            <div className="lg:col-span-8 space-y-4">
+            
+            {/* Left Column (5 cols, sticky): Section Header, Consultation Card & 3D HUD */}
+            <div className="lg:col-span-5 sticky top-28 space-y-6">
+              
+              {/* Section Header Card (Opaque High-Contrast Glass) */}
+              <div className={`space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border shadow-xl ${
+                theme === 'dark'
+                  ? 'bg-neutral-950/95 border-neutral-800/90 shadow-black/80 ring-1 ring-white/10'
+                  : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/10 ring-1 ring-black/5'
+              }`}>
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-900 font-mono">
+                  <HelpCircle className="w-4 h-4" />
+                  <span>07. Client Knowledge & Process</span>
+                  <span aria-hidden="true">·</span>
+                  <span>Common Inquiries</span>
+                </div>
+                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance">
+                  <GsapTextEffect text="Frequently Asked Questions." tag="span" />
+                </h2>
+                <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
+                  theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
+                }`}>
+                  Everything you need to know about our Figma tokenization, custom CRM engineering, and IP ownership.
+                </p>
+              </div>
+
+
+
+              {/* Quick Consultation CTA Card */}
+              <div className={`p-6 rounded-3xl border transition-all backdrop-blur-2xl ${
+                theme === 'dark'
+                  ? 'bg-[#111117]/95 border-neutral-800 shadow-xl'
+                  : 'bg-white/95 border-neutral-200/90 shadow-lg'
+              }`}>
+                <div className="space-y-4">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-rose-900 bg-rose-900/10 border border-rose-800/20">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Direct Technical Channel</span>
+                  </div>
+
+                  <h3 className="text-lg font-extrabold tracking-tight">
+                    Have a custom requirement?
+                  </h3>
+
+                  <p className={`text-xs leading-relaxed ${
+                    theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'
+                  }`}>
+                    Speak directly with a Mumbai-based lead architect to review your Figma component tokens or CRM integration roadmap.
+                  </p>
+
+                  <button
+                    onClick={() => {
+                      setCurrentPage('contact');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="w-full py-3 px-5 rounded-2xl bg-rose-900 hover:bg-rose-950 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-md shadow-rose-900/30 cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <span>Schedule Free Call</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right Column: Accordion Questions (7 cols) */}
+            <div className="lg:col-span-7 space-y-4">
               {faqs.map((faq, index) => {
                 const isOpen = openId === faq.id;
                 return (
                   <div
                     key={faq.id}
-                    className={`rounded-2xl border transition-all duration-200 overflow-hidden backdrop-blur-xl ${
+                    className={`rounded-2xl border transition-all duration-200 overflow-hidden backdrop-blur-2xl ${
                       isOpen
                         ? theme === 'dark'
                           ? 'bg-[#0F0F12]/95 border-rose-800/80 shadow-lg shadow-rose-950/20 ring-1 ring-rose-800/50'
-                          : 'bg-white/95 border-rose-900 shadow-md ring-1 ring-rose-900/30'
+                          : 'bg-white border-rose-900 shadow-lg ring-1 ring-rose-900/30'
                         : theme === 'dark'
-                        ? 'bg-neutral-950/85 border-neutral-800/80 hover:border-neutral-700 hover:bg-neutral-900/85'
-                        : 'bg-white/85 border-neutral-200 hover:border-neutral-300 hover:bg-neutral-100/85'
+                        ? 'bg-neutral-950/95 border-neutral-800/90 hover:border-neutral-700 hover:bg-neutral-900/95'
+                        : 'bg-white/95 border-neutral-200/90 hover:border-neutral-300 hover:bg-white shadow-sm'
                     }`}
                   >
                     <button
@@ -202,49 +245,6 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ theme, setCurrentPage })
               })}
             </div>
 
-            {/* Sidebar CTA Card (4 cols, sticky) */}
-            <div className="lg:col-span-4 sticky top-28">
-              <div className={`p-6 sm:p-8 rounded-3xl border transition-all ${
-                theme === 'dark'
-                  ? 'bg-gradient-to-b from-[#111117] to-[#0A0A0E] border-neutral-800 shadow-xl'
-                  : 'bg-gradient-to-b from-neutral-50 to-white border-neutral-200 shadow-lg'
-              }`}>
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-rose-900 bg-rose-900/10 border border-rose-800/20">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Direct Technical Channel</span>
-                  </div>
-
-                  <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-                    Have a custom requirement?
-                  </h3>
-
-                  <p className={`text-xs sm:text-sm leading-relaxed ${
-                    theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'
-                  }`}>
-                    Our principal systems architects review technical specifications, RFP documents, and Figma design drafts within 24 business hours.
-                  </p>
-
-                  <div className="pt-2 space-y-3">
-                    <button
-                      onClick={() => {
-                        setCurrentPage('contact');
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
-                      className="w-full py-3.5 px-4 text-xs font-bold uppercase tracking-wider rounded-xl text-white bg-rose-900 hover:bg-rose-950 cursor-pointer shadow-lg shadow-rose-900/30 transition-all flex items-center justify-center gap-2"
-                    >
-                      <Sparkles className="w-4 h-4" />
-                      <span>Book Consultation</span>
-                    </button>
-
-                    <div className="pt-2 border-t border-neutral-800/30 dark:border-neutral-800 flex items-center justify-between text-[11px] font-mono text-neutral-500">
-                      <span>Response time: &lt; 24h</span>
-                      <span className="text-rose-800 font-semibold">100% NDA Protected</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </motion.div>
       </div>

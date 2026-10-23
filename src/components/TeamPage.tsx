@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Theme } from '../types';
 import { TEAM_MEMBERS } from '../data/agencyData';
 import { MapPin, ArrowUpRight, Award, ShieldCheck } from 'lucide-react';
+import { GsapTextEffect } from './GsapTextEffect';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface TeamPageProps {
@@ -20,32 +21,32 @@ export const TeamPage: React.FC<TeamPageProps> = ({ theme, onNavigateToContact }
     : TEAM_MEMBERS.filter(m => m.location === selectedLocation);
 
   return (
-    <section className={`pt-28 pb-20 sm:pt-32 sm:pb-24 transition-colors duration-500 bg-white/20 dark:bg-[#080808]/20 backdrop-blur-sm border-y border-white/10 dark:border-white/5 relative z-10 ${
+    <section className={`pt-28 pb-20 sm:pt-32 sm:pb-24 transition-colors duration-500 bg-transparent relative z-10 ${
       theme === 'dark' ? 'text-white' : 'text-neutral-950'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Editorial Header */}
         <motion.div
-          className={`flex flex-col md:flex-row md:items-end justify-between gap-8 p-6 sm:p-9 rounded-3xl backdrop-blur-xl border shadow-xl ${
+          className={`flex flex-col md:flex-row md:items-end justify-between gap-8 p-6 sm:p-9 rounded-3xl backdrop-blur-2xl border shadow-xl ${
             theme === 'dark'
-              ? 'bg-neutral-950/80 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
-              : 'bg-white/85 border-neutral-200/90 shadow-rose-900/10 ring-1 ring-black/5'
+              ? 'bg-neutral-950/95 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
+              : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/5 ring-1 ring-black/5'
           }`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="max-w-3xl space-y-4">
-            <div className="flex items-center gap-3 text-xs font-semibold tracking-wider uppercase text-rose-900">
+            <div className="flex items-center gap-3 text-xs font-semibold tracking-wider uppercase text-rose-600 dark:text-rose-400 font-mono">
               <span>Leadership & Core Specialists</span>
               <span aria-hidden="true">·</span>
               <span>Global Expertise</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-balance leading-tight">
-              The Minds Behind the Architecture.
+            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance text-neutral-900 dark:text-white">
+              <GsapTextEffect text="The Minds Behind the Architecture." tag="span" />
             </h1>
-            <p className={`text-base sm:text-lg font-normal leading-relaxed max-w-2xl ${
+            <p className={`gsap-sentence-reveal text-sm sm:text-base font-normal leading-relaxed max-w-2xl ${
               theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
             }`}>
               Decades of combined experience in Figma token engineering, full-stack React systems, and high-conversion CRM pipelines.
@@ -93,10 +94,10 @@ export const TeamPage: React.FC<TeamPageProps> = ({ theme, onNavigateToContact }
                   className="group relative flex flex-col h-full"
                 >
                   {/* Card Container */}
-                  <div className={`relative flex-1 flex flex-col p-6 rounded-3xl transition-all duration-500 overflow-hidden backdrop-blur-xl ${
+                  <div className={`relative flex-1 flex flex-col p-6 rounded-3xl transition-all duration-500 overflow-hidden backdrop-blur-2xl ${
                     theme === 'dark' 
-                      ? 'bg-neutral-900/75 border border-neutral-800/90 hover:border-rose-900/60 shadow-2xl shadow-black/30' 
-                      : 'bg-white/90 border border-neutral-200/90 hover:border-rose-900/50 shadow-2xl shadow-neutral-900/5'
+                      ? 'bg-neutral-900/95 border border-neutral-800/90 hover:border-rose-900/60 shadow-2xl shadow-black/30' 
+                      : 'bg-white border border-neutral-200 hover:border-rose-900/50 shadow-xl'
                   }`}>
                     
                     {/* Top Badge / Status */}

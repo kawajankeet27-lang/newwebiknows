@@ -12,6 +12,32 @@
     <meta property="og:description" content="Webiknows IT Solutions Pvt. Ltd. is an all-in-one IT solution and technology company delivering custom software, Figma design systems, web development, mobile apps, CRM systems, and cloud infrastructure." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // Diagnostic bootstrap safety logger
+      window.addEventListener('error', function(e) {
+        if (e.message && (e.message.indexOf('ResizeObserver') !== -1)) return;
+        console.error('[Webiknows Runtime Exception]', e.message, e.filename, e.lineno, e.error);
+        var errBanner = document.getElementById('critical-runtime-error-banner');
+        if (!errBanner) {
+          errBanner = document.createElement('div');
+          errBanner.id = 'critical-runtime-error-banner';
+          errBanner.style.cssText = 'position:fixed;bottom:10px;left:10px;right:10px;z-index:9999999;background:#990000;color:#fff;padding:14px;border-radius:12px;font-family:monospace;font-size:12px;max-height:45vh;overflow:auto;box-shadow:0 8px 32px rgba(0,0,0,0.6);border:1px solid #ff6666;';
+          var title = document.createElement('div');
+          title.style.fontWeight = 'bold';
+          title.style.marginBottom = '6px';
+          title.textContent = 'Webiknows Exception Caught:';
+          errBanner.appendChild(title);
+          document.body ? document.body.appendChild(errBanner) : document.documentElement.appendChild(errBanner);
+        }
+        var msg = document.createElement('div');
+        msg.style.cssText = 'background:rgba(0,0,0,0.3);padding:6px 8px;border-radius:6px;margin-top:4px;word-break:break-all;';
+        msg.textContent = (e.message || String(e)) + ' (at ' + (e.filename || '') + ':' + (e.lineno || '') + ')';
+        errBanner.appendChild(msg);
+      });
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('[Webiknows Unhandled Rejection]', e.reason);
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -30,6 +30,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useWebVitals } from './hooks/useWebVitals';
 import { DynamicJsonLd } from './components/DynamicJsonLd';
 import { Webiknows3dScrollExperience } from './components/Webiknows3dScrollExperience';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { SmoothScrollProvider } from './components/SmoothScrollProvider';
 
 function MainAppContent() {
@@ -94,8 +95,8 @@ function MainAppContent() {
   return (
     <div
       style={{ touchAction: 'pan-y' }}
-      className={`min-h-screen flex flex-col font-sans transition-colors duration-300 w-full max-w-full overflow-x-hidden relative ${
-        theme === 'dark' ? 'bg-[#080808] text-white' : 'bg-white text-neutral-950'
+      className={`min-h-screen flex flex-col font-sans transition-colors duration-300 w-full max-w-full overflow-x-hidden relative bg-transparent ${
+        theme === 'dark' ? 'text-white' : 'text-neutral-950'
       }`}
     >
       {/* Sophisticated Branded Preloader */}
@@ -107,8 +108,10 @@ function MainAppContent() {
       {/* Unique & Impressive Background Motion Effects */}
       <BackgroundAnimation theme={theme} />
 
-      {/* Persistent Three.js WebGL Scene with GSAP ScrollTrigger Camera Path */}
-      <Webiknows3dScrollExperience theme={theme} />
+      {/* Persistent Full-Page Three.js WebGL Scene with GSAP Scroll Camera Path across all pages */}
+      <ErrorBoundary fallback={null}>
+        <Webiknows3dScrollExperience theme={theme} currentPage={currentPage as Page} />
+      </ErrorBoundary>
 
       {/* Dynamic JSON-LD Schema Markup */}
       <DynamicJsonLd currentPage={currentPage} />
@@ -124,20 +127,22 @@ function MainAppContent() {
       {/* Main Page View Router with AnimatePresence */}
       <main className="flex-1 w-full max-w-full overflow-x-hidden relative z-10" style={{ touchAction: 'pan-y' }}>
         <AnimatePresence mode="wait">
-          {currentPage === 'home' && cms.pageVisibility.home && (
+          {currentPage === 'home' && (cms.pageVisibility?.home !== false) && (
             <motion.div key="home" className="w-full max-w-full overflow-x-hidden" {...pageTransition}>
               {/* Hero Section */}
-              {cms.sectionVisibility.hero && (
+              {(cms.sectionVisibility?.hero !== false) && (
                 <div id="hero">
-                  <HeroSection
-                    theme={theme}
-                    setCurrentPage={(p) => setCurrentPage(p)}
-                  />
+                  <FadeInSection yOffset={60} delay={0.05}>
+                    <HeroSection
+                      theme={theme}
+                      setCurrentPage={(p) => setCurrentPage(p)}
+                    />
+                  </FadeInSection>
                 </div>
               )}
 
               {/* Trusted By Client Logo Marquee */}
-              {cms.sectionVisibility.clientLogos && (
+              {(cms.sectionVisibility?.clientLogos !== false) && (
                 <div id="client-logos">
                   <FadeInSection>
                     <ClientLogoMarquee theme={theme} />
@@ -146,7 +151,7 @@ function MainAppContent() {
               )}
 
               {/* Services Section */}
-              {cms.sectionVisibility.services && (
+              {(cms.sectionVisibility?.services !== false) && (
                 <FadeInSection>
                   <ServicesSection
                     theme={theme}
@@ -156,7 +161,7 @@ function MainAppContent() {
               )}
 
               {/* Why Choose Us Section */}
-              {cms.sectionVisibility.whyChooseUs && (
+              {(cms.sectionVisibility?.whyChooseUs !== false) && (
                 <div id="why-choose-us">
                   <FadeInSection>
                     <WhyChooseUsSection
@@ -168,7 +173,7 @@ function MainAppContent() {
               )}
 
               {/* Case Studies Section */}
-              {cms.sectionVisibility.caseStudies && (
+              {(cms.sectionVisibility?.caseStudies !== false) && (
                 <div id="case-studies">
                   <FadeInSection>
                     <CaseStudiesPage
@@ -180,7 +185,7 @@ function MainAppContent() {
               )}
 
               {/* Testimonials Section */}
-              {cms.sectionVisibility.testimonials && (
+              {(cms.sectionVisibility?.testimonials !== false) && (
                 <div id="testimonials">
                   <FadeInSection>
                     <TestimonialsSection
@@ -192,7 +197,7 @@ function MainAppContent() {
               )}
 
               {/* Blogs Section (Slider Design) */}
-              {cms.sectionVisibility.blogs && (
+              {(cms.sectionVisibility?.blogs !== false) && (
                 <div id="blogs">
                   <FadeInSection>
                     <BlogsSliderSection
@@ -204,7 +209,7 @@ function MainAppContent() {
               )}
 
               {/* FAQ Section */}
-              {cms.sectionVisibility.faq && (
+              {(cms.sectionVisibility?.faq !== false) && (
                 <div id="faq">
                   <FadeInSection>
                     <FaqSection theme={theme} setCurrentPage={(p) => setCurrentPage(p)} />
@@ -214,7 +219,7 @@ function MainAppContent() {
             </motion.div>
           )}
 
-          {currentPage === 'about' && cms.pageVisibility.about && (
+          {currentPage === 'about' && (cms.pageVisibility?.about !== false) && (
             <motion.div key="about" className="w-full max-w-full overflow-x-hidden" {...pageTransition}>
               <AboutPage
                 theme={theme}
@@ -223,7 +228,7 @@ function MainAppContent() {
             </motion.div>
           )}
 
-          {currentPage === 'services' && cms.pageVisibility.services && (
+          {currentPage === 'services' && (cms.pageVisibility?.services !== false) && (
             <motion.div key="services" className="w-full max-w-full overflow-x-hidden" {...pageTransition}>
               <ServicesSection
                 theme={theme}
@@ -233,7 +238,7 @@ function MainAppContent() {
             </motion.div>
           )}
 
-          {currentPage === 'casestudies' && cms.pageVisibility.casestudies && (
+          {currentPage === 'casestudies' && (cms.pageVisibility?.casestudies !== false) && (
             <motion.div key="casestudies" className="w-full max-w-full overflow-x-hidden" {...pageTransition}>
               <CaseStudiesPage
                 theme={theme}
@@ -243,7 +248,7 @@ function MainAppContent() {
             </motion.div>
           )}
 
-          {currentPage === 'team' && cms.pageVisibility.team && (
+          {currentPage === 'team' && (cms.pageVisibility?.team !== false) && (
             <motion.div key="team" className="w-full max-w-full overflow-x-hidden" {...pageTransition}>
               <TeamPage
                 theme={theme}
@@ -251,7 +256,7 @@ function MainAppContent() {
             </motion.div>
           )}
 
-          {currentPage === 'blogs' && cms.pageVisibility.blogs && (
+          {currentPage === 'blogs' && (cms.pageVisibility?.blogs !== false) && (
             <motion.div key="blogs" className="w-full max-w-full overflow-x-hidden" {...pageTransition}>
               <BlogsPage
                 theme={theme}
@@ -259,7 +264,7 @@ function MainAppContent() {
             </motion.div>
           )}
 
-          {currentPage === 'contact' && cms.pageVisibility.contact && (
+          {currentPage === 'contact' && (cms.pageVisibility?.contact !== false) && (
             <motion.div key="contact" className="w-full max-w-full overflow-x-hidden" {...pageTransition}>
               <ContactPage
                 theme={theme}

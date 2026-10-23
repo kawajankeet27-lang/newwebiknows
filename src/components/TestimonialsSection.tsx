@@ -6,6 +6,7 @@ import { TextReveal } from './TextReveal';
 import { PixyBorderBeam } from './PixyBorderBeam';
 import { PixyRollingText } from './PixyRollingText';
 import { GsapMagneticButton } from './GsapMagneticButton';
+import { GsapTextEffect } from './GsapTextEffect';
 import {
   Quote,
   MapPin,
@@ -216,18 +217,18 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ theme 
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        {/* Section Header: Kicker, Title, Subtitle, and Slide Controls */}
-        <div className={`p-6 sm:p-8 rounded-3xl backdrop-blur-xl border shadow-xl flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-10 ${
+        {/* Section Header: Kicker, Title, Subtitle, and Slide Controls (Opaque High-Contrast Glass) */}
+        <div className={`p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border shadow-xl flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-10 ${
           isDark
-            ? 'bg-neutral-950/80 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
-            : 'bg-white/85 border-neutral-200/90 shadow-rose-900/10 ring-1 ring-black/5'
+            ? 'bg-neutral-950/95 border-neutral-800/90 shadow-black/80 ring-1 ring-white/10'
+            : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/10 ring-1 ring-black/5'
         }`}>
           <motion.div
             className="max-w-3xl space-y-4"
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: false, margin: '-60px' }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="flex items-center gap-2.5">
               <span className="w-2 h-2 rounded-full bg-rose-900 animate-ping" />
@@ -236,11 +237,11 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ theme 
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.08] text-balance">
-              <TextReveal text="Client Feedback, Delivered Impact & Verified Trust." staggerDuration={0.02} />
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance">
+              <GsapTextEffect text="Client Feedback, Delivered Impact & Verified Trust." tag="span" />
             </h2>
 
-            <p className={`text-base sm:text-lg leading-relaxed ${isDark ? 'text-neutral-300' : 'text-neutral-600'}`}>
+            <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${isDark ? 'text-neutral-300' : 'text-neutral-600'}`}>
               Direct testimonials from engineering leaders and product executives whose revenue, latency, and design systems were transformed by Webiknows IT Solutions.
             </p>
           </motion.div>
@@ -249,10 +250,10 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ theme 
           <div className="flex flex-wrap items-center gap-4 shrink-0">
             {/* Live Trust Pill */}
             <div
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-mono font-semibold ${
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-mono font-semibold backdrop-blur-sm ${
                 isDark
-                  ? 'border-neutral-800 bg-neutral-900/90 text-neutral-300'
-                  : 'border-neutral-200 bg-neutral-50 text-neutral-700 shadow-xs'
+                  ? 'border-neutral-800 bg-neutral-900/70 text-neutral-300'
+                  : 'border-neutral-200 bg-white/70 text-neutral-700 shadow-xs'
               }`}
             >
               <Award className="w-4 h-4 text-amber-500" />
@@ -273,10 +274,10 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ theme 
                     type="button"
                     onClick={prevSlide}
                     aria-label="Previous client testimonial"
-                    className={`p-3 rounded-xl border transition-all cursor-pointer ${
+                    className={`p-3 rounded-xl border transition-all cursor-pointer backdrop-blur-sm ${
                       isDark
-                        ? 'bg-neutral-900 border-neutral-800 text-neutral-200 hover:border-rose-800 hover:text-white'
-                        : 'bg-white border-neutral-200 text-neutral-800 hover:border-rose-800 hover:bg-neutral-50 shadow-xs'
+                        ? 'bg-neutral-900/80 border-neutral-800 text-neutral-200 hover:border-rose-800 hover:text-white'
+                        : 'bg-white/80 border-neutral-200 text-neutral-800 hover:border-rose-800 hover:bg-white shadow-xs'
                     }`}
                   >
                     <ChevronLeft className="w-5 h-5" />
@@ -298,15 +299,14 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ theme 
           </div>
         </div>
 
-
-        {/* Main Grid: Left Spotlight Editorial Testimonial Card + Right Interactive Client Selector Rail */}
+        {/* Parallel 12-Column Grid: Big Testimonial Screen (7 cols) + Client Reviewers List (5 cols) */}
         <div
-          className="grid lg:grid-cols-12 gap-8 items-stretch"
+          className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Left Column: Spotlight Testimonial Hero (8 cols) */}
-          <div className="lg:col-span-8 flex flex-col justify-between">
+          {/* Left Column: Spotlight Testimonial Hero Screen (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
             <AnimatePresence custom={direction} mode="wait">
               <motion.div
                 key={current.id}
@@ -422,8 +422,8 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ theme 
             </AnimatePresence>
           </div>
 
-          {/* Right Column: Interactive Client Selector Rail (4 cols) */}
-          <div className="lg:col-span-4 flex flex-col justify-between space-y-3">
+          {/* Right Column: Interactive Client Selector Rail (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-3">
             <div className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-500 flex items-center justify-between px-1">
               <span>Client Reviewers</span>
               <span>{activeTestimonials.length} Stories</span>
@@ -445,8 +445,8 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ theme 
                           ? 'bg-[#0E0E12] border-rose-800/70 shadow-lg shadow-rose-950/30 ring-1 ring-rose-800/40'
                           : 'bg-white border-rose-900 shadow-md shadow-rose-800/10 ring-1 ring-rose-900'
                         : isDark
-                        ? 'bg-neutral-900/60 border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900'
-                        : 'bg-neutral-50 border-neutral-200 hover:border-neutral-300 hover:bg-white'
+                        ? 'bg-neutral-900/90 border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900'
+                        : 'bg-white border-neutral-200/90 shadow-sm hover:border-neutral-300 hover:bg-neutral-50'
                     }`}
                   >
                     {/* Active Indicator Bar */}
@@ -497,86 +497,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ theme 
           </div>
         </div>
 
-        {/* Bottom Section: Enterprise Trust & Verification Matrix */}
-        <div className="mt-16 pt-12 border-t border-neutral-200 dark:border-neutral-800/80">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div
-              className={`p-5 rounded-2xl border transition-all ${
-                isDark
-                  ? 'border-neutral-800 bg-neutral-900/50 hover:border-rose-800/40'
-                  : 'border-neutral-200 bg-neutral-50/80 hover:border-rose-800/40 shadow-xs'
-              }`}
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-rose-900/10 border border-rose-800/20 flex items-center justify-center text-rose-900">
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <div className="text-xs font-mono font-bold uppercase text-rose-900">SECURITY AUDIT</div>
-              </div>
-              <h4 className="text-sm font-extrabold mb-1">ISO 27001 Certified</h4>
-              <p className="text-xs text-neutral-500 leading-relaxed">
-                Bank-grade encryption, role-based database rules, and strict NDAs protecting every line of client code.
-              </p>
-            </div>
 
-            <div
-              className={`p-5 rounded-2xl border transition-all ${
-                isDark
-                  ? 'border-neutral-800 bg-neutral-900/50 hover:border-rose-800/40'
-                  : 'border-neutral-200 bg-neutral-50/80 hover:border-rose-800/40 shadow-xs'
-              }`}
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-rose-900/10 border border-rose-800/20 flex items-center justify-center text-rose-900">
-                  <Lock className="w-4 h-4" />
-                </div>
-                <div className="text-xs font-mono font-bold uppercase text-rose-900">IP OWNERSHIP</div>
-              </div>
-              <h4 className="text-sm font-extrabold mb-1">100% Client Git Ownership</h4>
-              <p className="text-xs text-neutral-500 leading-relaxed">
-                Zero proprietary lock-in. Full access to raw repositories, design tokens, and cloud infrastructure keys.
-              </p>
-            </div>
-
-            <div
-              className={`p-5 rounded-2xl border transition-all ${
-                isDark
-                  ? 'border-neutral-800 bg-neutral-900/50 hover:border-rose-800/40'
-                  : 'border-neutral-200 bg-neutral-50/80 hover:border-rose-800/40 shadow-xs'
-              }`}
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-rose-900/10 border border-rose-800/20 flex items-center justify-center text-rose-900">
-                  <Zap className="w-4 h-4" />
-                </div>
-                <div className="text-xs font-mono font-bold uppercase text-rose-900">PERFORMANCE SLA</div>
-              </div>
-              <h4 className="text-sm font-extrabold mb-1">&lt;180ms Latency SLA</h4>
-              <p className="text-xs text-neutral-500 leading-relaxed">
-                Engineered for maximum Core Web Vitals, instant state hydration, and effortless horizontal scalability.
-              </p>
-            </div>
-
-            <div
-              className={`p-5 rounded-2xl border transition-all ${
-                isDark
-                  ? 'border-neutral-800 bg-neutral-900/50 hover:border-rose-800/40'
-                  : 'border-neutral-200 bg-neutral-50/80 hover:border-rose-800/40 shadow-xs'
-              }`}
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-rose-900/10 border border-rose-800/20 flex items-center justify-center text-rose-900">
-                  <Award className="w-4 h-4" />
-                </div>
-                <div className="text-xs font-mono font-bold uppercase text-rose-900">SUPPORT GUARANTEE</div>
-              </div>
-              <h4 className="text-sm font-extrabold mb-1">Direct Lead Architect Slack</h4>
-              <p className="text-xs text-neutral-500 leading-relaxed">
-                No account manager bottlenecks. Daily syncs directly with the senior engineer architecting your system.
-              </p>
-            </div>
-          </div>
-        </div>
 
       </div>
     </section>

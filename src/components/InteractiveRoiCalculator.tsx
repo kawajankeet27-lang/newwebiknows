@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { GsapTextEffect } from './GsapTextEffect';
 
 interface RoiCalculatorProps {
   theme?: 'light' | 'dark';
@@ -38,18 +39,18 @@ export const InteractiveRoiCalculator: React.FC<RoiCalculatorProps> = ({ theme =
           <span className="text-xs font-mono uppercase tracking-widest text-rose-800 bg-rose-800/10 px-3 py-1.5 rounded-full border border-rose-800/20 inline-block mb-4">
             Interactive Impact Matrix
           </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6">
-            Calculate Your Digital <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-800 to-rose-950">Revenue Uplift</span>
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] mb-4 text-balance">
+            <GsapTextEffect text="Calculate Your Digital Revenue Uplift" tag="span" />
           </h2>
-          <p className={`text-base sm:text-lg ${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>
+          <p className={`gsap-sentence-reveal text-sm sm:text-base ${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>
             Experience how elite performance engineering and UX architecture compound your conversion velocity and enterprise value.
           </p>
         </div>
 
-        <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-3xl p-8 sm:p-12 border backdrop-blur-xl ${
+        <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-3xl p-8 sm:p-12 border backdrop-blur-2xl ${
           theme === 'dark'
-            ? 'bg-[#121216]/80 border-neutral-800 shadow-2xl'
-            : 'bg-white/90 border-neutral-200/80 shadow-xl'
+            ? 'bg-[#121216]/95 border-neutral-800 shadow-2xl'
+            : 'bg-white/98 border-neutral-200 shadow-2xl'
         }`}>
           {/* Sliders Column */}
           <div className="lg:col-span-7 space-y-8">

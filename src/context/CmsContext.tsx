@@ -607,33 +607,53 @@ const CmsContext = createContext<CmsContextType | undefined>(undefined);
 export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, setState] = useState<CmsState>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        return { 
-          ...defaultCmsState, 
-          ...parsed, 
-          officeLocations: parsed.officeLocations && parsed.officeLocations.length > 0 
-            ? parsed.officeLocations 
-            : DEFAULT_OFFICE_LOCATIONS,
-          meetingSlots: parsed.meetingSlots && parsed.meetingSlots.length > 0
-            ? parsed.meetingSlots
-            : DEFAULT_MEETING_SLOTS,
-          isAdminLoggedIn: false 
-        };
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const saved = window.localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          return { 
+            ...defaultCmsState, 
+            ...parsed, 
+            pageVisibility: {
+              ...defaultCmsState.pageVisibility,
+              ...(parsed.pageVisibility || {})
+            },
+            sectionVisibility: {
+              ...defaultCmsState.sectionVisibility,
+              ...(parsed.sectionVisibility || {})
+            },
+            siteMetadata: {
+              ...defaultCmsState.siteMetadata,
+              ...(parsed.siteMetadata || {})
+            },
+            pageSeoSettings: {
+              ...defaultCmsState.pageSeoSettings,
+              ...(parsed.pageSeoSettings || {})
+            },
+            officeLocations: parsed.officeLocations && parsed.officeLocations.length > 0 
+              ? parsed.officeLocations 
+              : DEFAULT_OFFICE_LOCATIONS,
+            meetingSlots: parsed.meetingSlots && parsed.meetingSlots.length > 0
+              ? parsed.meetingSlots
+              : DEFAULT_MEETING_SLOTS,
+            isAdminLoggedIn: false 
+          };
+        }
       }
     } catch (e) {
-      console.error('Failed to load CMS state from localStorage', e);
+      console.warn('Failed to load CMS state from localStorage, using default:', e);
     }
     return defaultCmsState;
   });
 
   useEffect(() => {
     try {
-      const { isAdminLoggedIn, ...persisted } = state;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted));
-    } catch (e) {
-      console.error('Failed to save CMS state to localStorage', e);
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const { isAdminLoggedIn, ...persisted } = state;
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted));
+      }
+    } catch {
+      // Storage access blocked or quota exceeded in sandboxed iframe
     }
   }, [state]);
 
@@ -1002,7 +1022,13 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const resetToDefaults = () => {
     setState(defaultCmsState);
-    localStorage.removeItem(STORAGE_KEY);
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    } catch {
+      // ignore in sandboxed environments
+    }
   };
 
   return (

@@ -88,7 +88,7 @@ export const InteractiveCrmSandbox: React.FC<InteractiveCrmSandboxProps> = ({ th
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className={`p-4 sm:p-6 lg:p-8 rounded-2xl border transition-all shadow-2xl ${
+      className={`p-4 sm:p-6 lg:p-8 rounded-3xl border transition-all shadow-2xl ${
         theme === 'dark'
           ? 'bg-[#0F0F12] border-neutral-800 text-white shadow-rose-950/20'
           : 'bg-white border-neutral-200 text-neutral-900 shadow-xl'

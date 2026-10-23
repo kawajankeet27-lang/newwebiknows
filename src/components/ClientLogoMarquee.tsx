@@ -26,8 +26,8 @@ export const ClientLogoMarquee: React.FC<ClientLogoMarqueeProps> = ({ theme }) =
 
   return (
     <div
-      className={`py-12 border-y overflow-hidden relative transition-colors duration-300 select-none backdrop-blur-xl shadow-md ${
-        theme === 'dark' ? 'bg-[#08080A]/85 border-neutral-800/80' : 'bg-white/85 border-neutral-200/80'
+      className={`py-12 border-y overflow-hidden relative transition-colors duration-300 select-none backdrop-blur-2xl shadow-md ${
+        theme === 'dark' ? 'bg-[#08080A]/95 border-neutral-800/80' : 'bg-white/95 border-neutral-200/90 shadow-sm'
       }`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}

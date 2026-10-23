@@ -32,7 +32,7 @@ export const BlogModal: React.FC<BlogModalProps> = ({ post, onClose, theme }) =>
       >
         {/* Sticky Header */}
         <div className={`sticky top-0 z-20 px-6 py-4 border-b flex items-center justify-between gap-4 backdrop-blur-md ${
-          theme === 'dark' ? 'bg-[#0F0F12]/90 border-neutral-800' : 'bg-white/90 border-neutral-200'
+          theme === 'dark' ? 'bg-[#0F0F12]/95 border-neutral-800' : 'bg-white border-neutral-200 shadow-xs'
         }`}>
           <div>
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-rose-900">

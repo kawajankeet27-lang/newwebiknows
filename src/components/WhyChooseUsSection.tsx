@@ -5,6 +5,7 @@ import { SpotlightCard } from './SpotlightCard';
 import { TextReveal } from './TextReveal';
 import { PixyBorderBeam } from './PixyBorderBeam';
 import { PixyRollingText } from './PixyRollingText';
+import { GsapTextEffect } from './GsapTextEffect';
 import { ShieldCheck, Layers, Zap, Clock, Sparkles, Award, Cpu, CheckCircle2, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -77,25 +78,25 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
           <div className="lg:col-span-7 space-y-8">
             {/* Section Header */}
             <motion.div
-              className={`space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-xl border shadow-xl ${
+              className={`space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border shadow-xl ${
                 theme === 'dark'
-                  ? 'bg-neutral-950/85 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
-                  : 'bg-white/85 border-neutral-200/90 shadow-rose-900/10 ring-1 ring-black/5'
+                  ? 'bg-neutral-950/95 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
+                  : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/5 ring-1 ring-black/5'
               }`}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: false, margin: '-60px' }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-900">
                 <span>02. Why Choose Webiknows</span>
                 <span aria-hidden="true">·</span>
                 <span>Engineering Differentiators</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-balance">
-                <TextReveal text="Why Global Tech Leaders Choose Webiknows." staggerDuration={0.025} />
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance">
+                <GsapTextEffect text="Why Global Tech Leaders Choose Webiknows." tag="span" />
               </h2>
-              <p className={`text-base sm:text-lg leading-relaxed ${
+              <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
                 theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
               }`}>
                 We bridge the gap between creative Figma prototyping and enterprise software engineering, delivering reliable, high-converting digital engines.
@@ -109,10 +110,10 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                 return (
                   <motion.div
                     key={item.id || idx}
-                    initial={{ opacity: 0, y: 24 }}
+                    initial={{ opacity: 0, y: 60 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: false, margin: '-60px' }}
+                    transition={{ duration: 0.7, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <div className="group/diff h-full select-none" data-cursor-text="STANDARD">
                       <SpotlightCard
@@ -161,6 +162,87 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
             </div>
           </div> {/* Close lg:col-span-7 */}
         </div> {/* Close grid */}
+
+        {/* Enterprise Trust & Verification Matrix placed directly below Why Choose Webiknows */}
+        <div className="mt-14 pt-10 border-t border-neutral-200/80 dark:border-neutral-800/80">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div
+              className={`p-6 rounded-2xl border backdrop-blur-2xl transition-all shadow-xl ${
+                theme === 'dark'
+                  ? 'border-neutral-800/90 bg-neutral-950/95 text-white hover:border-rose-800/50 shadow-black/60'
+                  : 'border-neutral-200/90 bg-white/95 text-neutral-950 hover:border-rose-800/40 shadow-xl shadow-neutral-950/10'
+              }`}
+            >
+              <div className="flex items-center gap-3 mb-2.5">
+                <div className="w-8 h-8 rounded-lg bg-rose-900/10 border border-rose-800/20 flex items-center justify-center text-rose-900 shrink-0">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <div className="text-xs font-mono font-bold uppercase text-rose-900">SECURITY AUDIT</div>
+              </div>
+              <h4 className="text-sm font-extrabold mb-1">ISO 27001 Certified</h4>
+              <p className={`text-xs leading-relaxed ${theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'}`}>
+                Bank-grade encryption, role-based database rules, and strict NDAs protecting every line of client code.
+              </p>
+            </div>
+
+            <div
+              className={`p-6 rounded-2xl border backdrop-blur-2xl transition-all shadow-xl ${
+                theme === 'dark'
+                  ? 'border-neutral-800/90 bg-neutral-950/95 text-white hover:border-rose-800/50 shadow-black/60'
+                  : 'border-neutral-200/90 bg-white/95 text-neutral-950 hover:border-rose-800/40 shadow-xl shadow-neutral-950/10'
+              }`}
+            >
+              <div className="flex items-center gap-3 mb-2.5">
+                <div className="w-8 h-8 rounded-lg bg-rose-900/10 border border-rose-800/20 flex items-center justify-center text-rose-900 shrink-0">
+                  <Lock className="w-4 h-4" />
+                </div>
+                <div className="text-xs font-mono font-bold uppercase text-rose-900">IP OWNERSHIP</div>
+              </div>
+              <h4 className="text-sm font-extrabold mb-1">100% Client Git Ownership</h4>
+              <p className={`text-xs leading-relaxed ${theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'}`}>
+                Zero proprietary lock-in. Full access to raw repositories, design tokens, and cloud infrastructure keys.
+              </p>
+            </div>
+
+            <div
+              className={`p-6 rounded-2xl border backdrop-blur-2xl transition-all shadow-xl ${
+                theme === 'dark'
+                  ? 'border-neutral-800/90 bg-neutral-950/95 text-white hover:border-rose-800/50 shadow-black/60'
+                  : 'border-neutral-200/90 bg-white/95 text-neutral-950 hover:border-rose-800/40 shadow-xl shadow-neutral-950/10'
+              }`}
+            >
+              <div className="flex items-center gap-3 mb-2.5">
+                <div className="w-8 h-8 rounded-lg bg-rose-900/10 border border-rose-800/20 flex items-center justify-center text-rose-900 shrink-0">
+                  <Zap className="w-4 h-4" />
+                </div>
+                <div className="text-xs font-mono font-bold uppercase text-rose-900">PERFORMANCE SLA</div>
+              </div>
+              <h4 className="text-sm font-extrabold mb-1">&lt;180ms Latency SLA</h4>
+              <p className={`text-xs leading-relaxed ${theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'}`}>
+                Engineered for maximum Core Web Vitals, instant state hydration, and effortless horizontal scalability.
+              </p>
+            </div>
+
+            <div
+              className={`p-6 rounded-2xl border backdrop-blur-2xl transition-all shadow-xl ${
+                theme === 'dark'
+                  ? 'border-neutral-800/90 bg-neutral-950/95 text-white hover:border-rose-800/50 shadow-black/60'
+                  : 'border-neutral-200/90 bg-white/95 text-neutral-950 hover:border-rose-800/40 shadow-xl shadow-neutral-950/10'
+              }`}
+            >
+              <div className="flex items-center gap-3 mb-2.5">
+                <div className="w-8 h-8 rounded-lg bg-rose-900/10 border border-rose-800/20 flex items-center justify-center text-rose-900 shrink-0">
+                  <Award className="w-4 h-4" />
+                </div>
+                <div className="text-xs font-mono font-bold uppercase text-rose-900">SUPPORT GUARANTEE</div>
+              </div>
+              <h4 className="text-sm font-extrabold mb-1">Direct Lead Architect Slack</h4>
+              <p className={`text-xs leading-relaxed ${theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'}`}>
+                No account manager bottlenecks. Daily syncs directly with the senior engineer architecting your system.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { Theme, Page } from '../types';
 import { ClientLogoMarquee } from './ClientLogoMarquee';
 import { FaqSection } from './FaqSection';
+import { GsapTextEffect } from './GsapTextEffect';
 import { motion } from 'framer-motion';
 import { Target, Eye, Compass, Sparkles, CheckCircle2, ShieldCheck, Zap, ArrowUpRight } from 'lucide-react';
 
@@ -45,31 +46,31 @@ export const AboutPage: React.FC<AboutPageProps> = ({ theme, setCurrentPage }) =
   ];
 
   return (
-    <div className={`pt-28 pb-20 sm:pt-32 sm:pb-24 transition-colors duration-300 space-y-20 bg-white/20 dark:bg-[#080808]/20 backdrop-blur-sm border-y border-white/10 dark:border-white/5 relative z-10 ${
+    <div className={`pt-28 pb-20 sm:pt-32 sm:pb-24 transition-colors duration-300 space-y-20 bg-transparent relative z-10 ${
       theme === 'dark' ? 'text-white' : 'text-neutral-950'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Header Hero */}
         <motion.div
-          className={`max-w-4xl space-y-6 p-6 sm:p-9 rounded-3xl backdrop-blur-xl border shadow-xl ${
+          className={`max-w-4xl space-y-6 p-6 sm:p-9 rounded-3xl backdrop-blur-2xl border shadow-xl ${
             theme === 'dark'
-              ? 'bg-neutral-950/80 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
-              : 'bg-white/85 border-neutral-200/90 shadow-rose-900/10 ring-1 ring-black/5'
+              ? 'bg-neutral-950/95 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
+              : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/5 ring-1 ring-black/5'
           }`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-900 font-mono">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 font-mono">
             <span>03. About Webiknows IT Solutions</span>
             <span aria-hidden="true">·</span>
             <span>Agency History & Vision</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-balance">
-            All In One IT Solution & Technology Company.
+          <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance text-neutral-900 dark:text-white">
+            <GsapTextEffect text="All In One IT Solution & Technology Company." tag="span" />
           </h1>
-          <p className={`text-base sm:text-lg leading-relaxed ${
+          <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
             theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
           }`}>
             Established in 2017 by CEO Ajit Tambde, Webiknows IT Solutions Pvt. Ltd. (webiknows.com) is a premier IT solutions and software engineering powerhouse headquartered in Mumbai, India. We deliver custom software engineering, Figma design systems, web & mobile applications, bespoke CRM platforms, and Webiknows Cloud enterprise hosting.
@@ -89,8 +90,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ theme, setCurrentPage }) =
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Our Core Philosophy</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">Goal, Vision & Mission</h2>
-              <p className={`text-sm ${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3]">
+                <GsapTextEffect text="Goal, Vision & Mission" tag="span" />
+              </h2>
+              <p className={`gsap-sentence-reveal text-xs sm:text-sm ${theme === 'dark' ? 'text-neutral-400' : 'text-neutral-600'}`}>
                 Built on unwavering standards of engineering excellence, design precision, and client partnership.
               </p>
             </div>
@@ -110,7 +113,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ theme, setCurrentPage }) =
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.15, ease: [0.16, 1, 0.3, 1] }}
-                  className={`p-8 rounded-[2.5xl] border flex flex-col justify-between space-y-8 relative overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-lg ${
+                  className={`p-8 rounded-3xl border flex flex-col justify-between space-y-8 relative overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-lg ${
                     theme === 'dark'
                       ? 'bg-[#0D0D12] border-neutral-800 hover:border-rose-800/50 bg-gradient-to-b from-[#0D0D12] to-[#08080B]'
                       : 'bg-white border-neutral-200 hover:border-rose-800/40 bg-gradient-to-b from-white to-neutral-50'

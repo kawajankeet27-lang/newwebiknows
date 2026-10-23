@@ -140,7 +140,7 @@ export const AiConsultantWidget: React.FC<AiConsultantWidgetProps> = ({
           className={`flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl border font-bold text-xs uppercase tracking-wider cursor-pointer backdrop-blur-md transition-all ${
             theme === 'dark'
               ? 'bg-neutral-900/90 border-neutral-700 text-white shadow-rose-950/40 hover:bg-neutral-800'
-              : 'bg-white/90 border-neutral-200 text-neutral-950 shadow-xl hover:bg-neutral-50'
+              : 'bg-white border-neutral-200 text-neutral-950 shadow-xl hover:bg-neutral-50'
           }`}
         >
           <div className="relative">

@@ -73,6 +73,26 @@ export const GsapWebflowEffects: React.FC<GsapWebflowEffectsProps> = ({ theme })
           }
         );
       });
+
+      // Kinetic GSAP Sentence & Font Reveal on Scroll
+      gsap.utils.toArray<HTMLElement>('.gsap-sentence-reveal').forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 32, filter: 'blur(5px)' },
+          {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 0.85,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 90%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        );
+      });
     });
 
     // 3. GSAP Subtle Card Translate Parallax on Mouse Movement

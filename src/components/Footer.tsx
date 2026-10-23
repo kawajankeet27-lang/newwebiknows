@@ -107,34 +107,38 @@ export const Footer: React.FC<FooterProps> = ({
 
   return (
     <>
-      {/* 1. STANDALONE 'LET\'S MAKE HISTORY' PRE-FOOTER SECTION (ZERO SOLID BACKGROUND, 3D VISIBILITY) */}
-      <section aria-label="Let's Make History" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12">
-        <div className="p-8 sm:p-14 rounded-3xl bg-white/95 dark:bg-neutral-950/95 border border-rose-900/20 dark:border-rose-800/40 backdrop-blur-2xl relative overflow-hidden shadow-2xl">
-          <PixyBorderBeam duration={10} size={300} colorFrom="#ef4444" colorTo="#fca5a5" />
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-rose-900/10 rounded-full blur-[140px] pointer-events-none" />
-          
-          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-12">
-            <div className="space-y-6 max-w-2xl">
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-rose-900/15 border border-rose-800/40 text-xs font-mono font-bold tracking-wider uppercase text-rose-800 dark:text-rose-400">
-                <span className="w-2.5 h-2.5 rounded-full bg-rose-800 animate-ping" />
-                <span>Q4/Q1 INTAKE · READY TO SCALE</span>
+      {/* 1. STANDALONE 'LET'S MAKE HISTORY' / CTA PRE-FOOTER SECTION (FULL WIDTH EDGE-TO-EDGE HORIZONTALLY) */}
+      <section 
+        aria-label="Let's Make History" 
+        className="relative z-10 w-full max-w-full my-0 py-12 sm:py-16 lg:py-20 border-y border-rose-900/20 dark:border-rose-800/40 bg-white/70 dark:bg-neutral-950/70 backdrop-blur-xl overflow-hidden shadow-2xl"
+      >
+        <PixyBorderBeam duration={10} size={400} colorFrom="#ef4444" colorTo="#fca5a5" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-rose-900/10 rounded-full blur-[140px] pointer-events-none" />
+        
+        <div className="w-full max-w-[1500px] mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
+            {/* Left Content Column (Equal 1 of 2) */}
+            <div className="space-y-4 flex-1">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-900/15 border border-rose-800/30 text-xs font-mono font-bold tracking-wider uppercase text-rose-900 dark:text-rose-400">
+                <Sparkles className="w-3.5 h-3.5 text-rose-800" />
+                <span>READY TO TRANSFORM YOUR TECH STACK?</span>
               </div>
               
-              <h2 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight leading-[0.92] text-balance text-neutral-950 dark:text-white">
-                Let's make <br />
-                <span className="bg-gradient-to-r from-rose-700 via-rose-900 to-rose-950 dark:from-rose-500 dark:via-rose-600 dark:to-rose-800 bg-clip-text text-transparent underline decoration-rose-500/30 decoration-wavy underline-offset-8">
-                  history.
+              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.25] text-balance text-neutral-950 dark:text-white">
+                Let's Build Enterprise Software <br className="hidden sm:inline" />
+                <span className="bg-gradient-to-r from-rose-700 via-rose-900 to-rose-950 dark:from-rose-400 dark:via-rose-500 dark:to-rose-700 bg-clip-text text-transparent underline decoration-rose-500/30 underline-offset-4">
+                  That Scales With You.
                 </span>
               </h2>
 
-              <p className={`text-base sm:text-lg font-semibold leading-relaxed ${
-                isDark ? 'text-neutral-200' : 'text-neutral-800'
+              <p className={`text-xs sm:text-sm font-medium leading-relaxed max-w-2xl ${
+                isDark ? 'text-neutral-300' : 'text-neutral-700'
               }`}>
-                We transform high-stakes concepts into production software engines, tokenized Figma libraries, and enterprise CRM pipelines. Partner directly with senior engineers.
+                Connect with our lead architects in Mumbai for a zero-obligation technical audit, Figma token sync review, or custom CRM roadmap.
               </p>
 
               {/* Quick Feature Pill Strip */}
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono font-bold text-neutral-600 dark:text-neutral-300 pt-2">
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:text-sm font-mono font-bold text-neutral-600 dark:text-neutral-300 pt-2">
                 <span className="flex items-center gap-1.5 text-neutral-900 dark:text-neutral-100">
                   <ShieldCheck className="w-4 h-4 text-emerald-500" />
                   ISO 27001 Certified
@@ -150,11 +154,11 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
             </div>
 
-            {/* Interactive Magnetic CTA Cluster */}
-            <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-stretch gap-4 shrink-0 min-w-[280px]">
+            {/* Right Action Button Cluster (Equal 2 of 2) */}
+            <div className="flex flex-col items-stretch justify-center gap-4 w-full">
               <GsapMagneticButton
-                strength={0.4}
-                data-cursor-text="TALK"
+                strength={0.35}
+                data-cursor-text="AUDIT"
                 onClick={() => {
                   setCurrentPage('contact');
                   scrollToTop();
@@ -162,40 +166,62 @@ export const Footer: React.FC<FooterProps> = ({
               >
                 <button
                   type="button"
-                  className="group relative flex items-center justify-between sm:justify-center gap-4 px-8 py-5 rounded-2xl bg-rose-900 hover:bg-rose-950 text-white font-extrabold text-sm uppercase tracking-wider transition-all duration-300 shadow-2xl shadow-rose-900/30 active:scale-95 cursor-pointer overflow-hidden w-full"
+                  className="group relative flex items-center justify-between gap-4 px-8 py-5 sm:py-6 rounded-2xl bg-rose-900 hover:bg-rose-950 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-xl shadow-rose-900/30 active:scale-98 cursor-pointer overflow-hidden w-full"
                 >
                   <PixyBorderBeam duration={8} size={180} colorFrom="#ffffff" colorTo="#fca5a5" />
                   <span className="relative z-10 flex items-center gap-3">
                     <Sparkles className="w-4 h-4" />
-                    <PixyRollingText text="Start Discovery Session" highlightColor="text-white" />
+                    <PixyRollingText text="Schedule Free Consultation" highlightColor="text-white" />
                   </span>
-                  <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center transition-transform duration-300 group-hover:rotate-45 group-hover:scale-110 relative z-10">
+                  <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 relative z-10">
                     <ArrowUpRight className="w-4 h-4 text-white" />
                   </div>
                 </button>
               </GsapMagneticButton>
 
-              <GsapMagneticButton
-                strength={0.25}
-                data-cursor-text="WHATSAPP"
-                onClick={() => {
-                  window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-                }}
-              >
-                <button
-                  type="button"
-                  className={`flex items-center justify-between sm:justify-center gap-3 px-6 py-5 rounded-2xl border font-bold text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-95 w-full ${
-                    isDark
-                      ? 'border-neutral-800 bg-neutral-900/60 hover:bg-neutral-800 text-neutral-200 hover:text-white shadow-inner'
-                      : 'border-neutral-300 bg-white/80 hover:bg-neutral-100 text-neutral-900 shadow-sm'
-                  }`}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 w-full">
+                <GsapMagneticButton
+                  strength={0.25}
+                  data-cursor-text="CASE STUDIES"
+                  onClick={() => {
+                    setCurrentPage('casestudies');
+                    scrollToTop();
+                  }}
                 >
-                  <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
-                  <span>
-                    <PixyRollingText text="WhatsApp Direct" highlightColor="text-[#25D366]" />
-                  </span>
-                </button>
-              </GsapMagneticButton>
+                  <button
+                    type="button"
+                    className={`flex items-center justify-center gap-2 px-6 py-4 sm:py-5 rounded-2xl border font-extrabold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-98 w-full ${
+                      isDark
+                        ? 'border-neutral-800 bg-neutral-900/90 hover:bg-neutral-800 text-neutral-200 hover:text-white shadow-sm'
+                        : 'border-neutral-300/90 bg-white hover:bg-neutral-100 text-neutral-900 shadow-sm'
+                    }`}
+                  >
+                    <PixyRollingText text="Explore Case Studies" highlightColor="text-rose-900 dark:text-rose-400" />
+                  </button>
+                </GsapMagneticButton>
+
+                <GsapMagneticButton
+                  strength={0.25}
+                  data-cursor-text="WHATSAPP"
+                  onClick={() => {
+                    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+                  }}
+                >
+                  <button
+                    type="button"
+                    className={`flex items-center justify-center gap-2.5 px-6 py-4 sm:py-5 rounded-2xl border font-bold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-98 w-full ${
+                      isDark
+                        ? 'border-neutral-800 bg-neutral-900/90 hover:bg-neutral-800 text-neutral-200 hover:text-white shadow-sm'
+                        : 'border-neutral-300/90 bg-white hover:bg-neutral-100 text-neutral-900 shadow-sm'
+                    }`}
+                  >
+                    <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
+                    <span>
+                      <PixyRollingText text="WhatsApp Direct" highlightColor="text-[#25D366]" />
+                    </span>
+                  </button>
+                </GsapMagneticButton>
+              </div>
             </div>
           </div>
         </div>
@@ -204,7 +230,7 @@ export const Footer: React.FC<FooterProps> = ({
       {/* 2. MAIN FOOTER COMPONENT */}
       <footer
         aria-label="Site Footer"
-        className={`relative border-t transition-colors duration-500 overflow-hidden bg-white/80 dark:bg-[#080808]/80 backdrop-blur-xl border-neutral-200/80 dark:border-neutral-800/80 ${
+        className={`relative border-t transition-colors duration-500 overflow-hidden bg-white/95 dark:bg-[#080808]/95 backdrop-blur-2xl border-neutral-200/90 dark:border-neutral-800/90 ${
           isDark ? 'text-white' : 'text-neutral-950'
         }`}
       >

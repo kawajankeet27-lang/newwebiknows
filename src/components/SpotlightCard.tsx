@@ -71,10 +71,10 @@ export const SpotlightCard: React.FC<SpotlightCardProps> = ({
         transformStyle: 'preserve-3d', 
         touchAction: 'pan-y' 
       }}
-      className={`relative overflow-hidden rounded-2xl border transition-colors duration-200 w-full max-w-full backdrop-blur-xl ${
+      className={`relative overflow-hidden rounded-2xl border transition-colors duration-200 w-full max-w-full backdrop-blur-2xl ${
         theme === 'dark'
-          ? 'bg-[#0F0F12]/85 border-neutral-800/90 text-white shadow-2xl shadow-black/40'
-          : 'bg-white/90 border-neutral-200/90 text-neutral-900 shadow-xl hover:border-rose-800/50'
+          ? 'bg-[#0c0c0f]/95 border-neutral-800/90 text-white shadow-xl shadow-black/60'
+          : 'bg-white/95 border-neutral-200/90 text-neutral-950 shadow-xl shadow-neutral-900/10 hover:border-rose-800/60'
       } ${className}`}
     >
       {/* Interactive Cursor Spotlight Glow (Desktop Only) */}
