@@ -57,7 +57,7 @@ export const BlogsSliderSection: React.FC<BlogsSliderSectionProps> = ({ theme, s
 
   return (
     <section 
-      className={`py-24 relative overflow-hidden transition-colors duration-300 bg-transparent ${
+      className={`py-24 relative z-10 overflow-hidden transition-colors duration-300 bg-white/20 dark:bg-[#080808]/20 backdrop-blur-sm border-y border-white/10 dark:border-white/5 ${
         theme === 'dark' ? 'text-white' : 'text-neutral-950'
       }`}
       onMouseEnter={() => setIsHovered(true)}

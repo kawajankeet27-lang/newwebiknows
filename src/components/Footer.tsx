@@ -106,53 +106,52 @@ export const Footer: React.FC<FooterProps> = ({
   const whatsappUrl = cms.siteMetadata?.whatsappUrl || 'https://wa.me/919820012345?text=Hello%20Webiknows';
 
   return (
-    <footer
-      aria-label="Site Footer"
-      className={`relative border-t transition-colors duration-500 overflow-hidden ${
-        isDark ? 'bg-[#060608]/85 backdrop-blur-md border-neutral-800/80 text-white' : 'bg-white/85 backdrop-blur-md border-neutral-200 text-neutral-950'
-      }`}
-    >
-      {/* Ambient Red Studio Radiance */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute -top-40 right-1/4 w-[700px] h-[350px] bg-rose-900/5 dark:bg-rose-900/10 rounded-full blur-[160px]" />
-        <div className="absolute -bottom-40 -left-20 w-[550px] h-[350px] bg-rose-600/5 dark:bg-rose-600/10 rounded-full blur-[160px]" />
-        {/* Subtle grid background pattern */}
-        <div 
-          className="absolute inset-0 opacity-[0.025] dark:opacity-[0.035] pointer-events-none"
-          style={{
-            backgroundImage: `radial-gradient(currentColor 1px, transparent 1px)`,
-            backgroundSize: '24px 24px'
-          }}
-        />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-16 sm:pt-24 pb-12">
-
-        {/* 1. HEROIC PRE-FOOTER OUTRO — KINETIC AGENCY STATEMENT */}
-        <div className="relative pb-16 sm:pb-24 border-b border-neutral-200 dark:border-neutral-800/80">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
-            <div className="space-y-4 max-w-3xl">
-              <div className="inline-flex items-center gap-2.5 text-xs font-mono font-bold tracking-wider uppercase text-rose-900 dark:text-rose-800">
-                <span className="w-2 h-2 rounded-full bg-rose-900 animate-ping" />
-                <span>[ Q4/Q1 INTAKE · READY TO SCALE ]</span>
+    <>
+      {/* 1. STANDALONE 'LET\'S MAKE HISTORY' PRE-FOOTER SECTION (ZERO SOLID BACKGROUND, 3D VISIBILITY) */}
+      <section aria-label="Let's Make History" className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12">
+        <div className="p-8 sm:p-14 rounded-3xl bg-white/95 dark:bg-neutral-950/95 border border-rose-900/20 dark:border-rose-800/40 backdrop-blur-2xl relative overflow-hidden shadow-2xl">
+          <PixyBorderBeam duration={10} size={300} colorFrom="#ef4444" colorTo="#fca5a5" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-rose-900/10 rounded-full blur-[140px] pointer-events-none" />
+          
+          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-12">
+            <div className="space-y-6 max-w-2xl">
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-rose-900/15 border border-rose-800/40 text-xs font-mono font-bold tracking-wider uppercase text-rose-800 dark:text-rose-400">
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-800 animate-ping" />
+                <span>Q4/Q1 INTAKE · READY TO SCALE</span>
               </div>
               
-              <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight leading-[0.92] text-balance">
+              <h2 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight leading-[0.92] text-balance text-neutral-950 dark:text-white">
                 Let's make <br />
-                <span className="text-rose-900 dark:text-rose-800 underline decoration-rose-800/30 decoration-wavy underline-offset-8">
+                <span className="bg-gradient-to-r from-rose-700 via-rose-900 to-rose-950 dark:from-rose-500 dark:via-rose-600 dark:to-rose-800 bg-clip-text text-transparent underline decoration-rose-500/30 decoration-wavy underline-offset-8">
                   history.
                 </span>
               </h2>
 
-              <p className={`text-base sm:text-lg max-w-xl font-medium leading-relaxed pt-2 ${
-                isDark ? 'text-neutral-400' : 'text-neutral-600'
+              <p className={`text-base sm:text-lg font-semibold leading-relaxed ${
+                isDark ? 'text-neutral-200' : 'text-neutral-800'
               }`}>
-                We transform high-stakes concepts into production software engines, tokenized Figma libraries, and enterprise CRM pipelines.
+                We transform high-stakes concepts into production software engines, tokenized Figma libraries, and enterprise CRM pipelines. Partner directly with senior engineers.
               </p>
+
+              {/* Quick Feature Pill Strip */}
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono font-bold text-neutral-600 dark:text-neutral-300 pt-2">
+                <span className="flex items-center gap-1.5 text-neutral-900 dark:text-neutral-100">
+                  <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                  ISO 27001 Certified
+                </span>
+                <span>·</span>
+                <span className="text-neutral-900 dark:text-neutral-100">
+                  Sub-180ms SLA
+                </span>
+                <span>·</span>
+                <span className="text-neutral-900 dark:text-neutral-100">
+                  100% In-House Code
+                </span>
+              </div>
             </div>
 
             {/* Interactive Magnetic CTA Cluster */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 shrink-0">
+            <div className="flex flex-col sm:flex-row lg:flex-col items-stretch sm:items-center lg:items-stretch gap-4 shrink-0 min-w-[280px]">
               <GsapMagneticButton
                 strength={0.4}
                 data-cursor-text="TALK"
@@ -163,7 +162,7 @@ export const Footer: React.FC<FooterProps> = ({
               >
                 <button
                   type="button"
-                  className="group relative flex items-center justify-between sm:justify-center gap-4 px-8 py-5 rounded-2xl bg-rose-900 hover:bg-rose-950 text-white font-extrabold text-sm uppercase tracking-wider transition-all duration-300 shadow-2xl shadow-rose-900/30 active:scale-95 cursor-pointer overflow-hidden"
+                  className="group relative flex items-center justify-between sm:justify-center gap-4 px-8 py-5 rounded-2xl bg-rose-900 hover:bg-rose-950 text-white font-extrabold text-sm uppercase tracking-wider transition-all duration-300 shadow-2xl shadow-rose-900/30 active:scale-95 cursor-pointer overflow-hidden w-full"
                 >
                   <PixyBorderBeam duration={8} size={180} colorFrom="#ffffff" colorTo="#fca5a5" />
                   <span className="relative z-10 flex items-center gap-3">
@@ -185,10 +184,10 @@ export const Footer: React.FC<FooterProps> = ({
               >
                 <button
                   type="button"
-                  className={`flex items-center justify-between sm:justify-center gap-3 px-6 py-5 rounded-2xl border font-bold text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-95 ${
+                  className={`flex items-center justify-between sm:justify-center gap-3 px-6 py-5 rounded-2xl border font-bold text-sm uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-95 w-full ${
                     isDark
-                      ? 'border-neutral-800 bg-neutral-900/80 hover:bg-neutral-800 text-neutral-200 hover:text-white shadow-inner'
-                      : 'border-neutral-300 bg-white hover:bg-neutral-100 text-neutral-900 shadow-sm'
+                      ? 'border-neutral-800 bg-neutral-900/60 hover:bg-neutral-800 text-neutral-200 hover:text-white shadow-inner'
+                      : 'border-neutral-300 bg-white/80 hover:bg-neutral-100 text-neutral-900 shadow-sm'
                   }`}
                 >
                   <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
@@ -200,6 +199,30 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
           </div>
         </div>
+      </section>
+
+      {/* 2. MAIN FOOTER COMPONENT */}
+      <footer
+        aria-label="Site Footer"
+        className={`relative border-t transition-colors duration-500 overflow-hidden bg-white/80 dark:bg-[#080808]/80 backdrop-blur-xl border-neutral-200/80 dark:border-neutral-800/80 ${
+          isDark ? 'text-white' : 'text-neutral-950'
+        }`}
+      >
+        {/* Ambient Red Studio Radiance */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+          <div className="absolute -top-40 right-1/4 w-[700px] h-[350px] bg-rose-900/5 dark:bg-rose-900/10 rounded-full blur-[160px]" />
+          <div className="absolute -bottom-40 -left-20 w-[550px] h-[350px] bg-rose-600/5 dark:bg-rose-600/10 rounded-full blur-[160px]" />
+          {/* Subtle grid background pattern */}
+          <div 
+            className="absolute inset-0 opacity-[0.025] dark:opacity-[0.035] pointer-events-none"
+            style={{
+              backgroundImage: `radial-gradient(currentColor 1px, transparent 1px)`,
+              backgroundSize: '24px 24px'
+            }}
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-12 pb-12 space-y-12">
 
         {/* 2. ARCHITECTURAL 4-COLUMN FOOTER GRID */}
         <div className="py-16 sm:py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 border-b border-neutral-200 dark:border-neutral-800/80">
@@ -519,5 +542,6 @@ export const Footer: React.FC<FooterProps> = ({
 
       </div>
     </footer>
+  </>
   );
 };

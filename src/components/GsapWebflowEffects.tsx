@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Theme } from '../types';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface GsapWebflowEffectsProps {
   theme: Theme;
@@ -29,7 +32,50 @@ export const GsapWebflowEffects: React.FC<GsapWebflowEffectsProps> = ({ theme })
     window.addEventListener('scroll', updateScrollProgress, { passive: true });
     updateScrollProgress();
 
-    // 2. GSAP Subtle Card Translate Parallax on Mouse Movement
+    // 2. GSAP ScrollTrigger Animations for cards and sections
+    const ctx = gsap.context(() => {
+      // Parallax elements on scroll
+      gsap.utils.toArray<HTMLElement>('.gsap-scroll-parallax').forEach((el) => {
+        gsap.fromTo(
+          el,
+          { y: 40, opacity: 0.85 },
+          {
+            y: -25,
+            opacity: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: true,
+            },
+          }
+        );
+      });
+
+      // Zoom-in cards and sections on scroll
+      gsap.utils.toArray<HTMLElement>('.gsap-scroll-zoom').forEach((card) => {
+        gsap.fromTo(
+          card,
+          { scale: 0.94, opacity: 0, y: 50, filter: 'blur(6px)' },
+          {
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 1.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        );
+      });
+    });
+
+    // 3. GSAP Subtle Card Translate Parallax on Mouse Movement
     const interactiveCards = document.querySelectorAll('.gsap-card-interactive');
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -40,8 +86,8 @@ export const GsapWebflowEffects: React.FC<GsapWebflowEffectsProps> = ({ theme })
 
       interactiveCards.forEach((card) => {
         gsap.to(card, {
-          x: dx * 6,
-          y: dy * 6,
+          x: dx * 8,
+          y: dy * 8,
           duration: 0.8,
           ease: 'power2.out',
         });
@@ -53,6 +99,7 @@ export const GsapWebflowEffects: React.FC<GsapWebflowEffectsProps> = ({ theme })
     return () => {
       window.removeEventListener('scroll', updateScrollProgress);
       window.removeEventListener('mousemove', handleMouseMove);
+      ctx.revert();
     };
   }, []);
 
