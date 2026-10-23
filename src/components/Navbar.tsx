@@ -43,6 +43,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const cms = useCms();
+
+  const handleNavClick = (page: Page) => {
+    playClick();
+    setCurrentPage(page);
+    setMobileMenuOpen(false);
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { duration: 1.0 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
   const allNavItems: { id: Page; label: string }[] = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About Us' },
@@ -73,11 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Zone 1: Single-Element Brand Wordmark */}
           <button
             onMouseEnter={playHover}
-            onClick={() => {
-              playClick();
-              setCurrentPage('home');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            onClick={() => handleNavClick('home')}
             className="flex items-center text-left group cursor-pointer focus:outline-none shrink-0"
             aria-label="Webiknows IT Solutions Home"
           >
@@ -92,11 +99,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onMouseEnter={playHover}
-                  onClick={() => {
-                    playClick();
-                    setCurrentPage(item.id);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
+                  onClick={() => handleNavClick(item.id)}
                   className={`relative px-3.5 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer ${
                     isActive
                       ? theme === 'dark'
@@ -190,12 +193,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <button
                     key={item.id}
                     onMouseEnter={playHover}
-                    onClick={() => {
-                      playClick();
-                      setCurrentPage(item.id);
-                      setMobileMenuOpen(false);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
+                    onClick={() => handleNavClick(item.id)}
                     className={`text-left px-4 py-3 text-sm font-semibold rounded-xl transition-colors cursor-pointer flex items-center justify-between ${
                       currentPage === item.id
                         ? 'bg-rose-900 text-white shadow-md shadow-rose-900/30'
@@ -212,12 +210,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <div className="pt-3 mt-2 border-t border-neutral-800/20">
                   <button
                     onMouseEnter={playHover}
-                    onClick={() => {
-                      playClick();
-                      setMobileMenuOpen(false);
-                      setCurrentPage('contact');
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
+                    onClick={() => handleNavClick('contact')}
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 text-xs font-bold uppercase tracking-wider rounded-xl text-white bg-rose-900 hover:bg-rose-950 cursor-pointer shadow-md shadow-rose-900/30"
                   >
                     <Sparkles className="w-4 h-4" />

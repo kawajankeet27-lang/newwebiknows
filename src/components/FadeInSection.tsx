@@ -23,7 +23,7 @@ export const FadeInSection: React.FC<FadeInSectionProps> = ({
       initial={{ opacity: 0, y: yOffset, scale: scaleFrom, filter: 'blur(8px)' }}
       whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
       exit={{ opacity: 0, y: -yOffset, scale: scaleFrom, filter: 'blur(8px)' }}
-      viewport={{ once: false, amount: 0.15, margin: '-50px' }}
+      viewport={{ once: true, amount: 0.1, margin: '-20px' }}
       transition={{
         duration,
         delay,

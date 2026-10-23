@@ -30,6 +30,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useWebVitals } from './hooks/useWebVitals';
 import { DynamicJsonLd } from './components/DynamicJsonLd';
 import { Webiknows3dScrollExperience } from './components/Webiknows3dScrollExperience';
+import { SmoothScrollProvider } from './components/SmoothScrollProvider';
 
 function MainAppContent() {
   useWebVitals();
@@ -303,7 +304,9 @@ export default function App() {
   return (
     <CmsProvider>
       <TranslationProvider>
-        <MainAppContent />
+        <SmoothScrollProvider>
+          <MainAppContent />
+        </SmoothScrollProvider>
       </TranslationProvider>
     </CmsProvider>
   );

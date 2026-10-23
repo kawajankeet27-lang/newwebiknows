@@ -10,19 +10,20 @@ export const GsapWebflowEffects: React.FC<GsapWebflowEffectsProps> = ({ theme })
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 1. GSAP Scroll Progress Indicator Bar at top of viewport
+    // 1. Sleek Scroll Progress Indicator Bar at top of viewport
+    let progressRafId: number | null = null;
     const updateScrollProgress = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+      if (progressRafId !== null) return;
+      progressRafId = requestAnimationFrame(() => {
+        progressRafId = null;
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? Math.min(Math.max(scrollTop / docHeight, 0), 1) : 0;
 
-      if (progressBarRef.current) {
-        gsap.to(progressBarRef.current, {
-          scaleX: progress,
-          duration: 0.1,
-          ease: 'none',
-        });
-      }
+        if (progressBarRef.current) {
+          progressBarRef.current.style.transform = `scaleX(${progress})`;
+        }
+      });
     };
 
     window.addEventListener('scroll', updateScrollProgress, { passive: true });

@@ -459,7 +459,7 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
         trigger: document.body,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 1.2,
+        scrub: 0.6,
         invalidateOnRefresh: true,
       },
     });
@@ -571,13 +571,13 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
       const targetLookY = camState.lookY - currentMouse.y * 0.2;
       const targetLookZ = camState.lookZ;
 
-      currentCamPos.x += (targetX - currentCamPos.x) * 0.08;
-      currentCamPos.y += (targetY - currentCamPos.y) * 0.08;
-      currentCamPos.z += (targetZ - currentCamPos.z) * 0.08;
+      currentCamPos.x += (targetX - currentCamPos.x) * 0.15;
+      currentCamPos.y += (targetY - currentCamPos.y) * 0.15;
+      currentCamPos.z += (targetZ - currentCamPos.z) * 0.15;
 
-      currentLookAt.x += (targetLookX - currentLookAt.x) * 0.08;
-      currentLookAt.y += (targetLookY - currentLookAt.y) * 0.08;
-      currentLookAt.z += (targetLookZ - currentLookAt.z) * 0.08;
+      currentLookAt.x += (targetLookX - currentLookAt.x) * 0.15;
+      currentLookAt.y += (targetLookY - currentLookAt.y) * 0.15;
+      currentLookAt.z += (targetLookZ - currentLookAt.z) * 0.15;
 
       camera.position.set(currentCamPos.x, currentCamPos.y, currentCamPos.z);
       camera.lookAt(currentLookAt.x, currentLookAt.y, currentLookAt.z);
@@ -649,19 +649,9 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
     window.addEventListener('resize', handleResize);
     handleResize();
 
-    let roRafId: number | null = null;
-    const resizeObserver = new ResizeObserver(() => {
-      if (roRafId !== null) cancelAnimationFrame(roRafId);
-      roRafId = requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
-      });
-    });
-    resizeObserver.observe(document.body);
-
     const refreshTimers = [
-      setTimeout(() => ScrollTrigger.refresh(), 200),
-      setTimeout(() => ScrollTrigger.refresh(), 600),
-      setTimeout(() => ScrollTrigger.refresh(), 1500),
+      setTimeout(() => ScrollTrigger.refresh(), 300),
+      setTimeout(() => ScrollTrigger.refresh(), 1000),
     ];
 
     // 11. WAYPOINT MONITORING
@@ -690,8 +680,6 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
       window.removeEventListener('scroll', updateActiveWaypoint);
       cancelAnimationFrame(animationFrameId);
       if (resizeRafId !== null) cancelAnimationFrame(resizeRafId);
-      if (roRafId !== null) cancelAnimationFrame(roRafId);
-      resizeObserver.disconnect();
       refreshTimers.forEach(clearTimeout);
 
       scrollTimeline.kill();
