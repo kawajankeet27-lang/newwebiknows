@@ -20,8 +20,8 @@ export const TeamPage: React.FC<TeamPageProps> = ({ theme, onNavigateToContact }
     : TEAM_MEMBERS.filter(m => m.location === selectedLocation);
 
   return (
-    <section className={`pt-28 pb-20 sm:pt-32 sm:pb-24 transition-colors duration-500 ${
-      theme === 'dark' ? 'bg-[#080808] text-white' : 'bg-[#FAFAFA] text-neutral-950'
+    <section className={`pt-28 pb-20 sm:pt-32 sm:pb-24 transition-colors duration-500 bg-white/20 dark:bg-[#080808]/20 backdrop-blur-sm border-y border-white/10 dark:border-white/5 relative z-10 ${
+      theme === 'dark' ? 'text-white' : 'text-neutral-950'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
