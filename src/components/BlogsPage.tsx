@@ -34,7 +34,7 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ theme }) => {
         
         {/* Header */}
         <motion.div
-          className={`max-w-3xl space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border shadow-xl ${
+          className={`flex flex-col md:flex-row md:items-end justify-between gap-8 p-6 sm:p-9 rounded-3xl backdrop-blur-2xl border shadow-xl ${
             theme === 'dark'
               ? 'bg-neutral-950/95 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
               : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/5 ring-1 ring-black/5'
@@ -43,19 +43,21 @@ export const BlogsPage: React.FC<BlogsPageProps> = ({ theme }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 font-mono">
-            <span>05. Industry Insights & Engineering Blogs</span>
-            <span aria-hidden="true">·</span>
-            <span>Knowledge Base</span>
+          <div className="max-w-3xl space-y-4">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 font-mono">
+              <span>05. Industry Insights & Engineering Blogs</span>
+              <span aria-hidden="true">·</span>
+              <span>Knowledge Base</span>
+            </div>
+            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance text-neutral-900 dark:text-white">
+              <GsapTextEffect text="Technical Insights on Figma Systems & Custom CRMs." tag="span" />
+            </h1>
+            <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
+              theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
+            }`}>
+              Read our engineering articles on tokenized design systems, custom pipeline webhooks, and 60fps React micro-interactions.
+            </p>
           </div>
-          <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance text-neutral-900 dark:text-white">
-            <GsapTextEffect text="Technical Insights on Figma Systems & Custom CRMs." tag="span" />
-          </h1>
-          <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
-            theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
-          }`}>
-            Read our engineering articles on tokenized design systems, custom pipeline webhooks, and 60fps React micro-interactions.
-          </p>
         </motion.div>
 
         {/* Filter Bar & Search Input */}

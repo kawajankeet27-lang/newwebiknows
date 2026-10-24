@@ -80,11 +80,11 @@ export const Footer: React.FC<FooterProps> = ({
 
   const allNavLinks: { id: Page; label: string; num: string }[] = [
     { id: 'home', label: 'Home', num: '01' },
-    { id: 'about', label: 'About Us', num: '02' },
-    { id: 'services', label: 'Services', num: '03' },
-    { id: 'casestudies', label: 'Case Studies', num: '04' },
-    { id: 'team', label: 'Meet the Team', num: '05' },
-    { id: 'blogs', label: 'Blogs & Insights', num: '06' },
+    { id: 'services', label: 'Services', num: '02' },
+    { id: 'casestudies', label: 'Case Studies', num: '03' },
+    { id: 'about', label: 'About Us', num: '04' },
+    { id: 'team', label: 'Team & Leadership', num: '05' },
+    { id: 'blogs', label: 'Insights & Blog', num: '06' },
     { id: 'contact', label: 'Contact Us', num: '07' }
   ];
   const navLinks = allNavLinks.filter(item => cms.pageVisibility?.[item.id] !== false);
@@ -93,8 +93,9 @@ export const Footer: React.FC<FooterProps> = ({
     { label: 'Custom Software Architecture', page: 'services' as Page, code: 'ENG' },
     { label: 'Tokenized Figma Systems', page: 'services' as Page, code: 'FGM' },
     { label: 'Enterprise CRM Platforms', page: 'services' as Page, code: 'CRM' },
-    { label: 'Mobile Engineering (iOS & Android)', page: 'services' as Page, code: 'MBL' },
-    { label: 'Webiknows Cloud & DevOps', page: 'services' as Page, code: 'CLD' }
+    { label: 'Mobile Apps (iOS & Android)', page: 'services' as Page, code: 'MBL' },
+    { label: 'Cloud & DevOps Infrastructure', page: 'services' as Page, code: 'CLD' },
+    { label: 'Micro-Interactions Prototyping', page: 'services' as Page, code: 'MOT' }
   ];
 
   const activeSocials = (cms.socialLinks || []).filter(s => s.enabled && s.url);
@@ -107,54 +108,38 @@ export const Footer: React.FC<FooterProps> = ({
 
   return (
     <>
-      {/* 1. STANDALONE 'LET'S MAKE HISTORY' / CTA PRE-FOOTER SECTION (FULL WIDTH EDGE-TO-EDGE HORIZONTALLY) */}
+      {/* 1. STANDALONE 'LET'S MAKE HISTORY' / CTA PRE-FOOTER SECTION WITH ELEGANT ROUNDED CORNERS */}
       <section 
         aria-label="Let's Make History" 
-        className="relative z-10 w-full max-w-full my-0 py-12 sm:py-16 lg:py-20 border-y border-rose-900/20 dark:border-rose-800/40 bg-white/70 dark:bg-neutral-950/70 backdrop-blur-xl overflow-hidden shadow-2xl"
+        className="relative z-10 w-full max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 my-12 sm:my-16 lg:my-20"
       >
-        <PixyBorderBeam duration={10} size={400} colorFrom="#ef4444" colorTo="#fca5a5" />
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-rose-900/10 rounded-full blur-[140px] pointer-events-none" />
-        
-        <div className="w-full max-w-[1500px] mx-auto px-6 sm:px-10 lg:px-16">
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
-            {/* Left Content Column (Equal 1 of 2) */}
-            <div className="space-y-4 flex-1">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-900/15 border border-rose-800/30 text-xs font-mono font-bold tracking-wider uppercase text-rose-900 dark:text-rose-400">
-                <Sparkles className="w-3.5 h-3.5 text-rose-800" />
+        <div className="p-8 sm:p-12 lg:p-14 rounded-3xl sm:rounded-[36px] bg-white/85 dark:bg-neutral-950/85 border border-neutral-200/90 dark:border-neutral-800/90 backdrop-blur-2xl relative overflow-hidden shadow-2xl">
+          <PixyBorderBeam duration={10} size={350} colorFrom="#ef4444" colorTo="#fca5a5" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-rose-900/10 rounded-full blur-[140px] pointer-events-none" />
+          
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center w-full">
+            {/* Left Content Column */}
+            <div className="space-y-4 sm:space-y-5 flex-1">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-900/10 border border-rose-800/30 text-xs font-mono font-bold tracking-wider uppercase text-rose-900 dark:text-rose-400">
+                <Sparkles className="w-3.5 h-3.5 text-rose-800 dark:text-rose-400" />
                 <span>READY TO TRANSFORM YOUR TECH STACK?</span>
               </div>
               
-              <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.25] text-balance text-neutral-950 dark:text-white">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.25rem] font-extrabold tracking-tight leading-[1.2] text-balance text-neutral-950 dark:text-white">
                 Let's Build Enterprise Software <br className="hidden sm:inline" />
-                <span className="bg-gradient-to-r from-rose-700 via-rose-900 to-rose-950 dark:from-rose-400 dark:via-rose-500 dark:to-rose-700 bg-clip-text text-transparent underline decoration-rose-500/30 underline-offset-4">
+                <span className="bg-gradient-to-r from-rose-700 via-rose-900 to-rose-950 dark:from-rose-400 dark:via-rose-500 dark:to-rose-600 bg-clip-text text-transparent underline decoration-rose-500/30 underline-offset-4">
                   That Scales With You.
                 </span>
               </h2>
 
-              <p className={`text-xs sm:text-sm font-medium leading-relaxed max-w-2xl ${
+              <p className={`text-sm sm:text-base font-normal leading-relaxed max-w-xl ${
                 isDark ? 'text-neutral-300' : 'text-neutral-700'
               }`}>
                 Connect with our lead architects in Mumbai for a zero-obligation technical audit, Figma token sync review, or custom CRM roadmap.
               </p>
-
-              {/* Quick Feature Pill Strip */}
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:text-sm font-mono font-bold text-neutral-600 dark:text-neutral-300 pt-2">
-                <span className="flex items-center gap-1.5 text-neutral-900 dark:text-neutral-100">
-                  <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                  ISO 27001 Certified
-                </span>
-                <span>·</span>
-                <span className="text-neutral-900 dark:text-neutral-100">
-                  Sub-180ms SLA
-                </span>
-                <span>·</span>
-                <span className="text-neutral-900 dark:text-neutral-100">
-                  100% In-House Code
-                </span>
-              </div>
             </div>
 
-            {/* Right Action Button Cluster (Equal 2 of 2) */}
+            {/* Right Action Button Cluster */}
             <div className="flex flex-col items-stretch justify-center gap-4 w-full">
               <GsapMagneticButton
                 strength={0.35}
@@ -166,7 +151,7 @@ export const Footer: React.FC<FooterProps> = ({
               >
                 <button
                   type="button"
-                  className="group relative flex items-center justify-between gap-4 px-8 py-5 sm:py-6 rounded-2xl bg-rose-900 hover:bg-rose-950 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-xl shadow-rose-900/30 active:scale-98 cursor-pointer overflow-hidden w-full"
+                  className="group relative flex items-center justify-between gap-4 px-8 py-5 sm:py-5.5 rounded-2xl bg-rose-900 hover:bg-rose-950 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all duration-300 shadow-xl shadow-rose-900/30 active:scale-98 cursor-pointer overflow-hidden w-full"
                 >
                   <PixyBorderBeam duration={8} size={180} colorFrom="#ffffff" colorTo="#fca5a5" />
                   <span className="relative z-10 flex items-center gap-3">
@@ -190,7 +175,7 @@ export const Footer: React.FC<FooterProps> = ({
                 >
                   <button
                     type="button"
-                    className={`flex items-center justify-center gap-2 px-6 py-4 sm:py-5 rounded-2xl border font-extrabold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-98 w-full ${
+                    className={`flex items-center justify-center gap-2 px-6 py-4 sm:py-4.5 rounded-2xl border font-extrabold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-98 w-full ${
                       isDark
                         ? 'border-neutral-800 bg-neutral-900/90 hover:bg-neutral-800 text-neutral-200 hover:text-white shadow-sm'
                         : 'border-neutral-300/90 bg-white hover:bg-neutral-100 text-neutral-900 shadow-sm'
@@ -209,7 +194,7 @@ export const Footer: React.FC<FooterProps> = ({
                 >
                   <button
                     type="button"
-                    className={`flex items-center justify-center gap-2.5 px-6 py-4 sm:py-5 rounded-2xl border font-bold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-98 w-full ${
+                    className={`flex items-center justify-center gap-2.5 px-6 py-4 sm:py-4.5 rounded-2xl border font-bold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer active:scale-98 w-full ${
                       isDark
                         ? 'border-neutral-800 bg-neutral-900/90 hover:bg-neutral-800 text-neutral-200 hover:text-white shadow-sm'
                         : 'border-neutral-300/90 bg-white hover:bg-neutral-100 text-neutral-900 shadow-sm'
@@ -230,7 +215,7 @@ export const Footer: React.FC<FooterProps> = ({
       {/* 2. MAIN FOOTER COMPONENT */}
       <footer
         aria-label="Site Footer"
-        className={`relative border-t transition-colors duration-500 overflow-hidden bg-white/95 dark:bg-[#080808]/95 backdrop-blur-2xl border-neutral-200/90 dark:border-neutral-800/90 ${
+        className={`relative my-8 sm:my-12 max-w-[1500px] mx-auto rounded-[36px] sm:rounded-[44px] border transition-colors duration-500 overflow-hidden bg-white/95 dark:bg-[#080808]/95 backdrop-blur-2xl border-neutral-200/90 dark:border-neutral-800/90 shadow-2xl ${
           isDark ? 'text-white' : 'text-neutral-950'
         }`}
       >

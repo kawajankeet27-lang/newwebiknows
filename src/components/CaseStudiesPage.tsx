@@ -173,7 +173,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
             
             {/* Page Header (Opaque High-Contrast Glass) */}
             <motion.div
-              className={`space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border shadow-xl ${
+              className={`flex flex-col md:flex-row md:items-end justify-between gap-8 p-6 sm:p-9 rounded-3xl backdrop-blur-2xl border shadow-xl ${
                 isDark
                   ? 'bg-neutral-950/95 border-neutral-800/90 shadow-black/80 ring-1 ring-white/10'
                   : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/10 ring-1 ring-black/5'
@@ -183,19 +183,21 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 font-mono">
-                <span>02. Case Studies & Proof</span>
-                <span aria-hidden="true">·</span>
-                <span>Client Impact</span>
+              <div className="max-w-3xl space-y-4">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 font-mono">
+                  <span>02. Case Studies & Proof</span>
+                  <span aria-hidden="true">·</span>
+                  <span>Client Impact</span>
+                </div>
+                <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance">
+                  <GsapTextEffect text="Proven Case Studies & Client Proof." tag="span" />
+                </h1>
+                <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
+                  isDark ? 'text-neutral-300' : 'text-neutral-600'
+                }`}>
+                  Explore our featured engineering case studies highlighting the industry focus, core technology stack, and full project overview.
+                </p>
               </div>
-              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance">
-                <GsapTextEffect text="Proven Case Studies & Client Proof." tag="span" />
-              </h1>
-              <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
-                isDark ? 'text-neutral-300' : 'text-neutral-600'
-              }`}>
-                Explore our featured engineering case studies highlighting the industry focus, core technology stack, and full project overview.
-              </p>
             </motion.div>
 
             {/* Category Filter Tabs */}

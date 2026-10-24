@@ -50,6 +50,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         isDark ? 'text-white' : 'text-neutral-950'
       }`}
     >
+
       {/* Grid Pattern Background Overlay */}
       <div className={`absolute inset-0 pointer-events-none z-0 ${
         isDark ? 'bg-figma-grid-dark opacity-20' : 'bg-figma-grid-light opacity-40'
@@ -61,9 +62,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* High-Contrast Hero Content Card Wrapper */}
-      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <motion.div 
-          className={`max-w-4xl mx-auto p-8 sm:p-12 md:p-14 rounded-3xl backdrop-blur-2xl border shadow-2xl relative overflow-hidden flex flex-col items-center justify-center text-center space-y-6 sm:space-y-8 ${
+          className={`w-full p-6 sm:p-12 md:p-20 rounded-3xl backdrop-blur-2xl border shadow-2xl relative overflow-hidden flex flex-col items-center justify-center text-center space-y-6 sm:space-y-10 ${
             isDark
               ? 'bg-neutral-950/95 border-neutral-800/90 shadow-black/80 ring-1 ring-white/10'
               : 'bg-white/95 border-neutral-200/90 shadow-2xl shadow-neutral-900/10 ring-1 ring-black/5'
@@ -73,17 +74,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           animate="visible"
         >
           {/* Animated Border Beam Edge */}
-          <PixyBorderBeam duration={10} size={300} colorFrom="#ef4444" colorTo="#fca5a5" />
+          <PixyBorderBeam duration={12} size={400} colorFrom="#ef4444" colorTo="#fca5a5" />
 
           {/* Main Display Headline in 2 Clean High-Contrast Lines */}
           <motion.div
             variants={itemVariants}
-            className="space-y-2 cursor-default w-full"
+            className="space-y-4 cursor-default w-full"
           >
-            <h1 className="gsap-translate-target text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] font-black tracking-tight leading-[1.25] text-center max-w-4xl mx-auto text-neutral-950 dark:text-white drop-shadow-xs">
+            <h1 className="gsap-translate-target text-2xl sm:text-4xl md:text-5xl lg:text-[3.2rem] font-black tracking-tight leading-[1.15] text-center max-w-5xl mx-auto text-neutral-950 dark:text-white">
               <GsapTextEffect tag="span" stagger={0.03}>
-                Transforming Bold Ideas into <br className="hidden sm:inline" />
-                <span className="text-rose-900 dark:text-rose-400 font-black underline decoration-rose-500/30 underline-offset-4">
+                Transforming Bold Ideas into <br className="hidden md:inline" />
+                <span className="text-rose-900 dark:text-rose-400 font-black underline decoration-rose-500/30 underline-offset-8">
                   High-Impact Custom Software & Figma Systems.
                 </span>
               </GsapTextEffect>
@@ -93,7 +94,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Subtitle Prose - Clean High Contrast */}
           <motion.p
             variants={itemVariants}
-            className={`gsap-translate-target gsap-sentence-reveal text-sm sm:text-base md:text-lg font-semibold max-w-3xl mx-auto text-center leading-relaxed ${
+            className={`gsap-translate-target gsap-sentence-reveal text-sm sm:text-base md:text-xl font-semibold max-w-3xl mx-auto text-center leading-relaxed ${
               isDark ? 'text-neutral-200' : 'text-neutral-800'
             }`}
           >
@@ -103,7 +104,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Centered Action Buttons Cluster */}
           <motion.div
             variants={itemVariants}
-            className="pt-2 flex flex-wrap items-center justify-center gap-4 sm:gap-6 w-full mx-auto"
+            className="pt-4 flex flex-wrap items-center justify-center gap-4 sm:gap-8 w-full mx-auto"
           >
             <GsapMagneticButton
               strength={0.35}
@@ -113,20 +114,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             >
-              <div className="relative group overflow-hidden rounded-2xl shadow-xl shadow-rose-900/30">
-                <PixyBorderBeam duration={4} size={200} colorFrom="#ef4444" colorTo="#f43f5e" />
+              <div className="relative group overflow-hidden rounded-2xl shadow-xl shadow-rose-900/30 w-full sm:w-auto">
+                <PixyBorderBeam duration={4} size={250} colorFrom="#ef4444" colorTo="#f43f5e" />
                 <button
                   type="button"
-                  className="flex items-center gap-3 px-8 py-4 sm:py-5 text-xs sm:text-sm font-extrabold uppercase tracking-wider rounded-2xl text-white bg-rose-900 hover:bg-rose-950 transition-all cursor-pointer shadow-lg active:scale-98"
+                  className="w-full flex items-center justify-center gap-3 px-6 sm:px-10 py-5 sm:py-6 text-xs sm:text-sm font-extrabold uppercase tracking-wider rounded-2xl text-white bg-rose-900 hover:bg-rose-950 transition-all cursor-pointer shadow-lg active:scale-98"
                 >
-                  <Sparkles className="w-4 h-4 animate-spin-slow" />
+                  <Sparkles className="w-5 h-5 animate-spin-slow" />
                   <span>
                     <PixyRollingText
                       text={t('startProject', 'Start Your Project')}
                       highlightColor="text-white"
                     />
                   </span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1.5" />
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1.5" />
                 </button>
               </div>
             </GsapMagneticButton>
@@ -141,14 +142,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             >
               <button
                 type="button"
-                className={`flex items-center gap-3 px-8 py-4 sm:py-5 text-xs sm:text-sm font-extrabold uppercase tracking-wider rounded-2xl border transition-all duration-300 cursor-pointer active:scale-98 ${
+                className={`w-full sm:w-auto flex items-center justify-center gap-3 px-6 sm:px-10 py-5 sm:py-6 text-xs sm:text-sm font-extrabold uppercase tracking-wider rounded-2xl border transition-all duration-300 cursor-pointer active:scale-98 ${
                   isDark
                     ? 'border-neutral-700 bg-neutral-900/95 hover:border-rose-800 hover:bg-neutral-800 text-neutral-100 shadow-xl'
                     : 'border-neutral-300 bg-white hover:border-rose-900 hover:bg-neutral-50 text-neutral-900 shadow-md'
                 }`}
               >
-                <div className="w-6 h-6 rounded-lg bg-rose-900/15 flex items-center justify-center text-rose-900">
-                  <Play className="w-3 h-3 fill-rose-900" />
+                <div className="w-7 h-7 rounded-lg bg-rose-900/15 flex items-center justify-center text-rose-900">
+                  <Play className="w-4 h-4 fill-rose-900" />
                 </div>
                 <span>
                   <PixyRollingText

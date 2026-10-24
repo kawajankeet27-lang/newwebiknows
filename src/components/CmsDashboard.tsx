@@ -63,6 +63,7 @@ export const CmsDashboard: React.FC<CmsDashboardProps> = ({ theme, setCurrentPag
   // CRUD Modals state
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const [serviceSearch, setServiceSearch] = useState('');
 
   const [editingCase, setEditingCase] = useState<CaseStudy | null>(null);
   const [isCaseModalOpen, setIsCaseModalOpen] = useState(false);
@@ -2029,65 +2030,156 @@ export const CmsDashboard: React.FC<CmsDashboardProps> = ({ theme, setCurrentPag
         {/* SERVICES CRUD TAB */}
         {activeTab === 'services' && (
           <div className="space-y-8">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <h1 className="text-3xl font-extrabold tracking-tight">Services Management</h1>
-                <p className="text-xs text-neutral-400">Add, edit, or delete core agency service offerings.</p>
+                <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-rose-900">
+                  <Briefcase className="w-4 h-4 text-rose-800" />
+                  <span>Core Engineering Capabilities & Interactive Architecture Calculator</span>
+                </div>
+                <h1 className="text-3xl font-extrabold tracking-tight mt-1">Services & Capabilities Management</h1>
+                <p className="text-xs text-neutral-400">Add, edit, or delete core agency service offerings, SLA delivery timelines, deliverables, tech stack tokens, and ROI benchmarks.</p>
               </div>
 
               <button
+                type="button"
                 onClick={() => {
                   setEditingService(null);
                   setIsServiceModalOpen(true);
                 }}
-                className="px-5 py-2.5 rounded-2xl bg-rose-900 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-rose-900/30 hover:bg-rose-950 transition-all cursor-pointer"
+                className="px-5 py-2.5 rounded-2xl bg-rose-900 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-rose-900/30 hover:bg-rose-950 transition-all cursor-pointer shrink-0"
               >
                 <Plus className="w-4 h-4" />
-                <span>Add Service</span>
+                <span>Add New Service Capability</span>
               </button>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {cms.services.map((service) => (
-                <div
-                  key={service.id}
-                  className={`p-6 rounded-3xl border space-y-4 ${
-                    theme === 'dark' ? 'bg-[#0E0E12] border-neutral-800' : 'bg-white border-neutral-200'
+            {/* Search & Statistics Bar */}
+            <div className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+              theme === 'dark' ? 'bg-[#0E0E12] border-neutral-800' : 'bg-white border-neutral-200'
+            }`}>
+              <div className="relative flex-1 max-w-md">
+                <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={serviceSearch}
+                  onChange={(e) => setServiceSearch(e.target.value)}
+                  placeholder="Filter service capabilities by name, tech stack, or SLA..."
+                  className={`w-full pl-9 pr-4 py-2 text-xs font-mono rounded-xl border outline-none ${
+                    theme === 'dark' ? 'bg-neutral-900 border-neutral-800 text-white' : 'bg-neutral-50 border-neutral-300 text-neutral-900'
                   }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-bold text-rose-900 uppercase">[{service.iconName}]</span>
-                    <span className="text-xs font-mono text-neutral-400">{service.estimatedTime}</span>
-                  </div>
+                />
+              </div>
 
-                  <h3 className="text-xl font-bold">{service.name}</h3>
-                  <p className="text-xs text-neutral-400 leading-relaxed">{service.description}</p>
-
-                  <div className="pt-4 border-t border-neutral-800/40 flex justify-end gap-2">
-                    <button
-                      onClick={() => {
-                        setEditingService(service);
-                        setIsServiceModalOpen(true);
-                      }}
-                      className="p-2 rounded-xl border border-neutral-700 hover:bg-neutral-800 text-neutral-200 cursor-pointer"
-                    >
-                      <Edit3 className="w-4 h-4" />
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        if (confirm(`Delete service "${service.name}"?`)) {
-                          cms.deleteService(service.id);
-                        }
-                      }}
-                      className="p-2 rounded-xl border border-red-900/50 bg-rose-950/30 text-rose-700 hover:bg-red-900/50 cursor-pointer"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              ))}
+              <div className="text-xs font-mono text-neutral-400 flex items-center gap-2">
+                <span>Total Active Capabilities:</span>
+                <span className="font-extrabold text-rose-800 px-2.5 py-0.5 rounded-md bg-rose-900/10 border border-rose-800/20">
+                  {cms.services.length}
+                </span>
+              </div>
             </div>
+
+            {/* Services Cards Grid */}
+            {cms.services.filter(s => {
+              const q = serviceSearch.toLowerCase().trim();
+              return !q || s.name.toLowerCase().includes(q) || s.tagline.toLowerCase().includes(q) || s.description.toLowerCase().includes(q) || s.techStack.some(t => t.toLowerCase().includes(q));
+            }).length === 0 ? (
+              <div className="p-12 text-center text-neutral-500 font-mono text-xs border border-dashed border-neutral-800 rounded-3xl">
+                No service capability found matching "{serviceSearch}". Click "+ Add New Service Capability" above to create one.
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-6 items-stretch">
+                {cms.services
+                  .filter(s => {
+                    const q = serviceSearch.toLowerCase().trim();
+                    return !q || s.name.toLowerCase().includes(q) || s.tagline.toLowerCase().includes(q) || s.description.toLowerCase().includes(q) || s.techStack.some(t => t.toLowerCase().includes(q));
+                  })
+                  .map((service, index) => (
+                    <div
+                      key={service.id}
+                      className={`p-6 sm:p-7 rounded-3xl border flex flex-col justify-between space-y-5 transition-all ${
+                        theme === 'dark' ? 'bg-[#0E0E12] border-neutral-800 hover:border-rose-900/40' : 'bg-white border-neutral-200 shadow-sm'
+                      }`}
+                    >
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between pb-3 border-b border-neutral-800/50">
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-mono font-bold text-rose-900">0{index + 1}.</span>
+                            <span className="text-xs font-mono font-bold text-neutral-400 uppercase">[{service.iconName}]</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded-md bg-rose-900/10 border border-rose-800/30 text-rose-800">
+                              SLA: {service.estimatedTime}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <h3 className="text-xl font-extrabold text-white">{service.name}</h3>
+                          <p className="text-xs font-medium text-rose-800 font-mono">{service.tagline}</p>
+                        </div>
+
+                        <p className="text-xs text-neutral-400 leading-relaxed">{service.description}</p>
+
+                        {/* Deliverables Preview */}
+                        <div className="space-y-1.5 pt-1">
+                          <span className="text-[10px] font-mono uppercase font-bold text-neutral-500">Deliverables ({service.deliverables?.length || 0}):</span>
+                          <ul className="space-y-1 text-xs text-neutral-300">
+                            {service.deliverables?.slice(0, 3).map((item, idx) => (
+                              <li key={idx} className="flex items-center gap-1.5">
+                                <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                                <span className="truncate">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {/* Tech Stack Tokens */}
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {service.techStack?.map((tech, idx) => (
+                            <span key={idx} className="px-2 py-0.5 text-[10px] font-mono bg-neutral-900 border border-neutral-800 text-neutral-300 rounded-md">
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Card Footer Actions */}
+                      <div className="pt-4 border-t border-neutral-800/50 flex items-center justify-between gap-3">
+                        <span className="text-[10px] font-mono text-emerald-400 font-bold">
+                          ROI: {service.typicalRoi || 'High Impact'}
+                        </span>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEditingService(service);
+                              setIsServiceModalOpen(true);
+                            }}
+                            className="px-3.5 py-2 rounded-xl border border-neutral-700 hover:bg-neutral-800 text-xs font-bold text-white flex items-center gap-1.5 cursor-pointer"
+                          >
+                            <Edit3 className="w-3.5 h-3.5" />
+                            <span>Edit</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (confirm(`Are you sure you want to delete service "${service.name}"?`)) {
+                                cms.deleteService(service.id);
+                              }
+                            }}
+                            className="p-2 rounded-xl border border-red-900/50 bg-rose-950/30 text-rose-700 hover:bg-red-900/50 cursor-pointer"
+                            title="Delete Service"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -3871,64 +3963,175 @@ const ServiceModalForm: React.FC<{
     tagline: '',
     description: '',
     iconName: 'Cpu',
-    deliverables: ['Custom Architecture Document'],
-    figmaFeatures: ['Variables & Tokens'],
-    techStack: ['React 19', 'Tailwind CSS'],
-    estimatedTime: '2-4 Weeks',
-    typicalRoi: '2.5x Velocity'
+    deliverables: ['Custom Software Architecture', 'Production React Application'],
+    figmaFeatures: ['Variables & Tokens', 'Auto Layout 5'],
+    techStack: ['React 19', 'TypeScript', 'Node.js', 'PostgreSQL'],
+    estimatedTime: '4 - 8 Weeks',
+    typicalRoi: '3.5x Velocity'
   });
+
+  const [deliverablesInput, setDeliverablesInput] = useState((service?.deliverables || ['Custom Software Architecture', 'Production React Application']).join('\n'));
+  const [techStackInput, setTechStackInput] = useState((service?.techStack || ['React 19', 'TypeScript', 'Node.js', 'PostgreSQL']).join(', '));
+  const [figmaFeaturesInput, setFigmaFeaturesInput] = useState((service?.figmaFeatures || ['Variables & Tokens', 'Auto Layout 5']).join(', '));
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const updatedService: Service = {
+      ...form,
+      deliverables: deliverablesInput.split('\n').map(s => s.trim()).filter(Boolean),
+      techStack: techStackInput.split(',').map(s => s.trim()).filter(Boolean),
+      figmaFeatures: figmaFeaturesInput.split(',').map(s => s.trim()).filter(Boolean),
+    };
+    onSave(updatedService);
+  };
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-[#0F0F12] text-white border border-neutral-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-4">
+      <div className="bg-[#0F0F12] text-white border border-neutral-800 rounded-3xl p-6 sm:p-8 max-w-xl w-full space-y-5 my-8 shadow-2xl">
         <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
-          <h2 className="text-xl font-bold">{service ? 'Edit Service' : 'Add New Service'}</h2>
-          <button onClick={onClose} className="p-1 rounded-lg hover:bg-neutral-800"><X className="w-5 h-5" /></button>
+          <div className="flex items-center gap-2">
+            <Briefcase className="w-5 h-5 text-rose-900" />
+            <h2 className="text-xl font-bold">{service ? 'Edit Service Capability' : 'Add New Service Capability'}</h2>
+          </div>
+          <button type="button" onClick={onClose} className="p-1.5 rounded-xl hover:bg-neutral-800 cursor-pointer">
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
-        <div className="space-y-3 text-xs">
+        <form onSubmit={handleSubmit} className="space-y-4 text-xs max-h-[65vh] overflow-y-auto pr-1">
           <div>
-            <label className="block font-bold mb-1">Service Name</label>
+            <label className="block font-bold mb-1 text-neutral-300">Service / Capability Name</label>
             <input
               type="text"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white"
+              placeholder="e.g. Custom CRM Development & Automations"
+              className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white font-semibold"
               required
             />
           </div>
 
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block font-bold mb-1 text-neutral-300">Domain Icon Emblem</label>
+              <select
+                value={form.iconName}
+                onChange={(e) => setForm({ ...form, iconName: e.target.value })}
+                className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white font-mono"
+              >
+                <option value="Figma">Figma / Layers</option>
+                <option value="LayoutGrid">LayoutGrid / CRM</option>
+                <option value="Code">Code / React Web</option>
+                <option value="Smartphone">Smartphone / Mobile</option>
+                <option value="Cpu">Cpu / Enterprise System</option>
+                <option value="Sparkles">Sparkles / Prototyping</option>
+                <option value="Database">Database / PostgreSQL</option>
+                <option value="Globe">Globe / Web Architecture</option>
+                <option value="Workflow">Workflow / Pipeline</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block font-bold mb-1 text-neutral-300">Estimated Timeline SLA</label>
+              <input
+                type="text"
+                value={form.estimatedTime}
+                onChange={(e) => setForm({ ...form, estimatedTime: e.target.value })}
+                placeholder="e.g. 4 - 8 Weeks"
+                className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white font-mono"
+                required
+              />
+            </div>
+          </div>
+
           <div>
-            <label className="block font-bold mb-1">Tagline</label>
+            <label className="block font-bold mb-1 text-neutral-300">Short Tagline</label>
             <input
               type="text"
               value={form.tagline}
               onChange={(e) => setForm({ ...form, tagline: e.target.value })}
-              className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white"
-            />
-          </div>
-
-          <div>
-            <label className="block font-bold mb-1">Description</label>
-            <textarea
-              rows={3}
-              value={form.description}
-              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              placeholder="e.g. Tailored pipeline engines, automated sales workflows & data synchronization"
               className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white"
               required
             />
           </div>
-        </div>
 
-        <div className="pt-4 flex justify-end gap-3 border-t border-neutral-800">
-          <button onClick={onClose} className="px-4 py-2.5 rounded-xl border border-neutral-800 text-neutral-400 text-xs font-bold uppercase">Cancel</button>
-          <button
-            onClick={() => onSave(form)}
-            className="px-6 py-2.5 rounded-xl bg-rose-900 text-white text-xs font-bold uppercase shadow-md shadow-rose-900/30"
-          >
-            Save Service
-          </button>
-        </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block font-bold mb-1 text-neutral-300">Typical ROI Benchmark</label>
+              <input
+                type="text"
+                value={form.typicalRoi}
+                onChange={(e) => setForm({ ...form, typicalRoi: e.target.value })}
+                placeholder="e.g. 184% Pipeline Velocity"
+                className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-emerald-400 font-bold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-bold mb-1 text-neutral-300">Figma Features (Comma Separated)</label>
+              <input
+                type="text"
+                value={figmaFeaturesInput}
+                onChange={(e) => setFigmaFeaturesInput(e.target.value)}
+                placeholder="e.g. Variables & Modes, Component Properties"
+                className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block font-bold mb-1 text-neutral-300">Full Description</label>
+            <textarea
+              rows={3}
+              value={form.description}
+              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              placeholder="Detailed breakdown of the service, architecture, and value proposition..."
+              className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white leading-relaxed"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block font-bold mb-1 text-neutral-300">Deliverables List (1 Deliverable per Line)</label>
+            <textarea
+              rows={4}
+              value={deliverablesInput}
+              onChange={(e) => setDeliverablesInput(e.target.value)}
+              placeholder="Kanban & List Pipeline Views&#10;Automated Lead Scoring&#10;Custom Revenue Dashboards"
+              className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white font-mono leading-relaxed"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block font-bold mb-1 text-neutral-300">Tech Stack Tokens (Comma Separated)</label>
+            <input
+              type="text"
+              value={techStackInput}
+              onChange={(e) => setTechStackInput(e.target.value)}
+              placeholder="React 19, TypeScript, Node.js, PostgreSQL, Webhooks"
+              className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-rose-300 font-mono"
+              required
+            />
+          </div>
+
+          <div className="pt-4 flex justify-end gap-3 border-t border-neutral-800">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2.5 rounded-xl border border-neutral-800 text-neutral-400 hover:text-white text-xs font-bold uppercase cursor-pointer"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-6 py-2.5 rounded-xl bg-rose-900 hover:bg-rose-950 text-white text-xs font-bold uppercase shadow-lg shadow-rose-900/30 cursor-pointer"
+            >
+              Save Service Capability
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

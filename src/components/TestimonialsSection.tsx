@@ -205,7 +205,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ theme 
   return (
     <section
       aria-label="Client Feedback and Trust Verification"
-      className={`py-24 sm:py-32 transition-colors duration-300 bg-white/20 dark:bg-[#080808]/20 backdrop-blur-sm border-y border-white/10 dark:border-white/5 relative z-10 overflow-hidden ${
+      className={`py-20 transition-colors duration-300 bg-transparent relative z-10 overflow-hidden ${
         isDark ? 'text-white' : 'text-neutral-950'
       }`}
     >
@@ -480,20 +480,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ theme 
               })}
             </div>
 
-            {/* Quick Consultation CTA Card */}
-            <div
-              className={`p-4 rounded-2xl border transition-all ${
-                isDark ? 'bg-neutral-900/70 border-neutral-800' : 'bg-neutral-50 border-neutral-200'
-              }`}
-            >
-              <div className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2 font-mono font-bold">
-                  <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                  <span>100% Code Ownership</span>
-                </div>
-                <span className="text-[10px] font-mono text-neutral-500">ISO 27001</span>
-              </div>
-            </div>
+
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BlogPost, Theme, Page } from '../types';
 import { useCms } from '../context/CmsContext';
 import { BlogModal } from './BlogModal';
@@ -6,9 +6,9 @@ import { SpotlightCard } from './SpotlightCard';
 import { GsapTextEffect } from './GsapTextEffect';
 import { 
   Clock, ArrowRight, BookOpen, ChevronLeft, ChevronRight, 
-  Pause, Play, Sparkles, User, Calendar, Tag, ArrowUpRight
+  Pause, Play, ArrowUpRight
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface BlogsSliderSectionProps {
   theme: Theme;
@@ -58,7 +58,7 @@ export const BlogsSliderSection: React.FC<BlogsSliderSectionProps> = ({ theme, s
 
   return (
     <section 
-      className={`py-24 relative z-10 overflow-hidden transition-colors duration-300 bg-white/20 dark:bg-[#080808]/20 backdrop-blur-sm border-y border-white/10 dark:border-white/5 ${
+      className={`py-20 relative z-10 overflow-hidden transition-colors duration-300 bg-transparent ${
         theme === 'dark' ? 'text-white' : 'text-neutral-950'
       }`}
       onMouseEnter={() => setIsHovered(true)}
@@ -68,132 +68,126 @@ export const BlogsSliderSection: React.FC<BlogsSliderSectionProps> = ({ theme, s
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-rose-900/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-rose-600/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 relative z-10">
         
-        {/* Asymmetric 12-Column Grid: Left Column holds Header & Slider, Right Column reveals 3D Scene */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          
-          {/* Content Column (7 cols): Header & Slider Cards */}
-          <div className="lg:col-span-7 space-y-6">
+        {/* Header with Title & Slider Controls */}
+        <div className={`p-6 sm:p-9 rounded-3xl backdrop-blur-2xl border shadow-xl flex flex-col md:flex-row md:items-end justify-between gap-8 ${
+          theme === 'dark'
+            ? 'bg-neutral-950/95 border-neutral-800/90 shadow-black/80 ring-1 ring-white/10'
+            : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/10 ring-1 ring-black/5'
+        }`}>
+          <div className="max-w-3xl space-y-4">
+            <div className="flex items-center gap-3 text-xs font-semibold tracking-wider uppercase text-rose-600 dark:text-rose-400 font-mono">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>06. Knowledge Base & Engineering Blogs</span>
+            </div>
             
-            {/* Header with Title & Slider Controls (Opaque High-Contrast Glass) */}
-            <div className={`p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border shadow-xl flex flex-col justify-between gap-6 ${
-              theme === 'dark'
-                ? 'bg-neutral-950/95 border-neutral-800/90 shadow-black/80 ring-1 ring-white/10'
-                : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/10 ring-1 ring-black/5'
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance">
+              <GsapTextEffect text="Latest Insights & Engineering Articles." tag="span" />
+            </h2>
+            
+            <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
+              theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
             }`}>
-              <div className="space-y-3">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-mono font-bold uppercase tracking-wider text-rose-900 border-rose-800/20 bg-rose-800/10">
-                  <BookOpen className="w-3.5 h-3.5" />
-                  <span>06. Knowledge Base & Engineering Blogs</span>
-                </div>
-                
-                <h2 className="text-lg sm:text-xl md:text-2xl lg:text-[1.85rem] font-extrabold tracking-tight leading-[1.3] text-balance">
-                  <GsapTextEffect text="Latest Insights & Engineering Articles." tag="span" />
-                </h2>
-                
-                <p className={`gsap-sentence-reveal text-sm sm:text-base leading-relaxed ${
-                  theme === 'dark' ? 'text-neutral-300' : 'text-neutral-600'
-                }`}>
-                  Deep dives into Figma token automation, sub-180ms CRM architectures, and high-performance React micro-animations.
-                </p>
-              </div>
+              Deep dives into Figma token automation, sub-180ms CRM architectures, and high-performance React micro-animations.
+            </p>
+          </div>
 
-              {/* Action & Slider Navigation Controls */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-neutral-200/50 dark:border-neutral-800/60">
-                {/* Category Filter Pills */}
-                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setActiveCategory(cat)}
-                      className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer backdrop-blur-sm ${
-                        activeCategory === cat
-                          ? 'bg-rose-900 text-white shadow-md shadow-rose-900/30'
-                          : theme === 'dark'
-                          ? 'bg-neutral-900/70 border border-neutral-800 text-neutral-400 hover:text-white'
-                          : 'bg-white/70 border border-neutral-200/80 text-neutral-700 hover:text-neutral-950'
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Navigation Controls */}
-                <div className="flex items-center gap-2 shrink-0">
-                  <button
-                    onClick={() => setIsAutoSliding(!isAutoSliding)}
-                    title={isAutoSliding ? 'Pause Auto-slide' : 'Play Auto-slide'}
-                    className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-center backdrop-blur-sm ${
-                      theme === 'dark'
-                        ? 'bg-neutral-900/80 border-neutral-800 text-neutral-300 hover:text-white'
-                        : 'bg-white/80 border-neutral-200 text-neutral-700 hover:text-neutral-950 shadow-xs'
-                    }`}
-                  >
-                    {isAutoSliding ? (
-                      <Pause className="w-4 h-4 text-rose-800 animate-pulse" />
-                    ) : (
-                      <Play className="w-4 h-4 text-neutral-400 ml-0.5" />
-                    )}
-                  </button>
-
-                  <button
-                    onClick={handlePrev}
-                    aria-label="Previous Article"
-                    className={`p-2.5 rounded-xl border transition-all cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-sm ${
-                      theme === 'dark'
-                        ? 'bg-neutral-900/80 border-neutral-800 text-white hover:bg-rose-900 hover:border-rose-900'
-                        : 'bg-white/80 border-neutral-200 text-neutral-900 hover:bg-rose-900 hover:text-white hover:border-rose-900 shadow-xs'
-                    }`}
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    onClick={handleNext}
-                    aria-label="Next Article"
-                    className={`p-2.5 rounded-xl border transition-all cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-sm ${
-                      theme === 'dark'
-                        ? 'bg-neutral-900/80 border-neutral-800 text-white hover:bg-rose-900 hover:border-rose-900'
-                        : 'bg-white/80 border-neutral-200 text-neutral-900 hover:bg-rose-900 hover:text-white hover:border-rose-900 shadow-xs'
-                    }`}
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+          {/* Action & Slider Navigation Controls */}
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-neutral-200/50 dark:border-neutral-800/60">
+            {/* Category Filter Pills */}
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-3 py-1.5 text-xs font-bold rounded-xl transition-all cursor-pointer backdrop-blur-sm ${
+                    activeCategory === cat
+                      ? 'bg-rose-900 text-white shadow-md shadow-rose-900/30'
+                      : theme === 'dark'
+                      ? 'bg-neutral-900/70 border border-neutral-800 text-neutral-400 hover:text-white'
+                      : 'bg-white/70 border border-neutral-200/80 text-neutral-700 hover:text-neutral-950'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
 
-            {/* Blog Cards Carousel Feed inside 7-col space */}
-            <div className="relative">
-              {totalPosts === 0 ? (
-                <div className="p-12 text-center text-neutral-500 font-mono text-xs">
-                  No blog articles match this category.
-                </div>
-              ) : (
-                <div className="overflow-hidden">
-                  <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 gap-6"
-                    initial={false}
-                  >
-                    {[0, 1].map((offset) => {
-                      const postIndex = (currentIndex + offset) % totalPosts;
-                      const post = filteredPosts[postIndex];
+            {/* Navigation Controls */}
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => setIsAutoSliding(!isAutoSliding)}
+                title={isAutoSliding ? 'Pause Auto-slide' : 'Play Auto-slide'}
+                className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center justify-center backdrop-blur-sm ${
+                  theme === 'dark'
+                    ? 'bg-neutral-900/80 border-neutral-800 text-neutral-300 hover:text-white'
+                    : 'bg-white/80 border-neutral-200 text-neutral-700 hover:text-neutral-950 shadow-xs'
+                }`}
+              >
+                {isAutoSliding ? (
+                  <Pause className="w-4 h-4 text-rose-800 animate-pulse" />
+                ) : (
+                  <Play className="w-4 h-4 text-neutral-400 ml-0.5" />
+                )}
+              </button>
 
-                      if (!post) return null;
+              <button
+                onClick={handlePrev}
+                aria-label="Previous Article"
+                className={`p-2.5 rounded-xl border transition-all cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-sm ${
+                  theme === 'dark'
+                    ? 'bg-neutral-900/80 border-neutral-800 text-white hover:bg-rose-900 hover:border-rose-900'
+                    : 'bg-white/80 border-neutral-200 text-neutral-900 hover:bg-rose-900 hover:text-white hover:border-rose-900 shadow-xs'
+                }`}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
 
-                      return (
-                        <motion.div
-                          key={`${post.id}-${offset}`}
-                          layout
-                          initial={{ opacity: 0, x: 30 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -30 }}
-                          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                          className="group cursor-pointer"
-                          onClick={() => setSelectedPost(post)}
-                        >
+              <button
+                onClick={handleNext}
+                aria-label="Next Article"
+                className={`p-2.5 rounded-xl border transition-all cursor-pointer hover:scale-105 active:scale-95 backdrop-blur-sm ${
+                  theme === 'dark'
+                    ? 'bg-neutral-900/80 border-neutral-800 text-white hover:bg-rose-900 hover:border-rose-900'
+                    : 'bg-white/80 border-neutral-200 text-neutral-900 hover:bg-rose-900 hover:text-white hover:border-rose-900 shadow-xs'
+                }`}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Blog Cards Carousel Feed (2 Insight Cards side-by-side) */}
+        <div className="relative">
+          {totalPosts === 0 ? (
+            <div className="p-12 text-center text-neutral-500 font-mono text-xs">
+              No blog articles match this category.
+            </div>
+          ) : (
+            <div className="overflow-hidden">
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                initial={false}
+              >
+                {[0, 1].map((offset) => {
+                  const postIndex = (currentIndex + offset) % totalPosts;
+                  const post = filteredPosts[postIndex];
+
+                  if (!post) return null;
+
+                  return (
+                    <motion.div
+                      key={`${post.id}-${offset}`}
+                      layout
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -30 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="group cursor-pointer"
+                      onClick={() => setSelectedPost(post)}
+                    >
                       <SpotlightCard
                         theme={theme}
                         enableTilt={true}
@@ -265,6 +259,32 @@ export const BlogsSliderSection: React.FC<BlogsSliderSectionProps> = ({ theme, s
           )}
         </div>
 
+        {/* CTA Banner placed directly below the 2 insight cards */}
+        <div className={`p-6 sm:p-8 rounded-3xl border shadow-xl backdrop-blur-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-6 ${
+          theme === 'dark'
+            ? 'bg-neutral-950/95 border-neutral-800/90 text-white shadow-black/60 ring-1 ring-white/10'
+            : 'bg-white/95 border-neutral-200/90 text-neutral-950 shadow-xl shadow-neutral-950/10 ring-1 ring-black/5'
+        }`}>
+          <div className="space-y-1">
+            <span className="text-rose-900 dark:text-rose-400 font-extrabold text-base sm:text-lg block">
+              Want to read full engineering docs?
+            </span>
+            <span className="text-xs sm:text-sm text-neutral-500 font-sans block">
+              Explore our entire library of whitepapers & technical guides.
+            </span>
+          </div>
+          <button
+            onClick={() => {
+              setCurrentPage('blogs');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="px-6 py-3 rounded-xl bg-rose-900 text-white font-bold text-xs sm:text-sm hover:bg-rose-950 transition-all flex items-center justify-center gap-2 cursor-pointer shrink-0 shadow-md shadow-rose-900/30 active:scale-95"
+          >
+            <span>Read All Docs</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </button>
+        </div>
+
         {/* Carousel Pagination Progress Bar & Dot Indicators */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-neutral-800/30">
           
@@ -296,43 +316,6 @@ export const BlogsSliderSection: React.FC<BlogsSliderSectionProps> = ({ theme, s
                 }`}
               />
             ))}
-          </div>
-
-        </div>
-
-          </div>
-
-          {/* Right Column (5 cols, sticky): OPEN 3D VIEWPORT WITH INTERACTIVE 3D HUD */}
-          <div className="hidden lg:block lg:col-span-5 sticky top-28 space-y-6 pointer-events-auto">
-            
-
-
-            {/* View All Blogs Action Card - Opaque Solid Glass for 100% Text Visibility */}
-            <div className={`p-5 rounded-2xl border shadow-xl backdrop-blur-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono ${
-              theme === 'dark'
-                ? 'bg-neutral-950/95 border-neutral-800/90 text-white shadow-black/60'
-                : 'bg-white/95 border-neutral-200/90 text-neutral-950 shadow-xl shadow-neutral-950/10'
-            }`}>
-              <div className="space-y-0.5">
-                <span className="text-rose-900 dark:text-rose-400 font-extrabold text-sm block">
-                  Want to read full engineering docs?
-                </span>
-                <span className="text-[11px] text-neutral-500 font-sans block">
-                  Explore our entire library of whitepapers & technical guides.
-                </span>
-              </div>
-              <button
-                onClick={() => {
-                  setCurrentPage('blogs');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="px-4 py-2.5 rounded-xl bg-rose-900 text-white font-bold text-xs hover:bg-rose-950 transition-all flex items-center justify-center gap-1.5 cursor-pointer shrink-0 shadow-md shadow-rose-900/30 active:scale-95"
-              >
-                <span>Read All Docs</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </button>
-            </div>
-
           </div>
 
         </div>

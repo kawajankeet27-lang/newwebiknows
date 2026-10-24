@@ -97,7 +97,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ theme, setCurrentPage })
   };
 
   return (
-    <section className={`py-24 sm:py-32 transition-colors duration-300 relative z-10 overflow-hidden bg-white/20 dark:bg-[#080808]/20 backdrop-blur-sm border-y border-white/10 dark:border-white/5 ${
+    <section className={`py-20 transition-colors duration-300 relative z-10 overflow-hidden bg-transparent ${
       theme === 'dark' ? 'text-white' : 'text-neutral-950'
     }`}>
       {/* Background Subtle Gradient Blurs */}

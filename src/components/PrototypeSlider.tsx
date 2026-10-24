@@ -57,7 +57,7 @@ export const PrototypeSlider: React.FC<PrototypeSliderProps> = ({ theme }) => {
           </h3>
           <p className="text-xs text-neutral-500 mt-1 max-w-xl">
             {isMobile 
-              ? 'Tap preset buttons below or drag the center handle to switch between Figma specs and production code.'
+              ? 'Tap preset buttons below or drag the center handle to switch between Figma details and production code.'
               : 'Drag the central slider handle to inspect atomic tokens transform into sub-180ms React components.'}
           </p>
         </div>

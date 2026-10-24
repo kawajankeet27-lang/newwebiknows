@@ -254,7 +254,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ theme }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Header */}
-        <div className={`max-w-3xl space-y-4 p-6 sm:p-8 rounded-3xl backdrop-blur-2xl border shadow-xl ${
+        <div className={`w-full space-y-4 p-6 sm:p-9 rounded-3xl backdrop-blur-2xl border shadow-xl ${
           theme === 'dark'
             ? 'bg-neutral-950/95 border-neutral-800/80 shadow-black/80 ring-1 ring-white/5'
             : 'bg-white/95 border-neutral-200/90 shadow-xl shadow-neutral-900/5 ring-1 ring-black/5'

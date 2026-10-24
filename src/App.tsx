@@ -42,6 +42,11 @@ function MainAppContent() {
   const cms = useCms();
 
   useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.style.colorScheme = theme;
+  }, [theme]);
+
+  useEffect(() => {
     const handleHashChange = () => {
       if (window.location.hash === '#cms') {
         setCurrentPage('cms');

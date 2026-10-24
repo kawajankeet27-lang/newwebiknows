@@ -502,14 +502,24 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
     const codeTechs = [
       { name: 'React', icon: '⚛', color: '#06b6d4', tag: 'UI' },
       { name: 'TypeScript', icon: 'TS', color: '#3b82f6', tag: 'LANG' },
-      { name: 'Figma', icon: '❖', color: '#f43f5e', tag: 'DESIGN' },
-      { name: 'Node.js', icon: '⬢', color: '#22c55e', tag: 'ENGINE' },
-      { name: 'Python', icon: 'PY', color: '#eab308', tag: 'AI' },
+      { name: 'Python', icon: 'PY', color: '#eab308', tag: 'AI & DATA' },
+      { name: 'Node.js', icon: '⬢', color: '#22c55e', tag: 'RUNTIME' },
+      { name: 'Go', icon: 'GO', color: '#00add8', tag: 'BACKEND' },
+      { name: 'Rust', icon: 'RS', color: '#f97316', tag: 'SYSTEMS' },
+      { name: 'Java', icon: 'JAVA', color: '#ea580c', tag: 'ENTERPRISE' },
+      { name: 'C++', icon: 'C++', color: '#2563eb', tag: 'CORE' },
+      { name: 'Swift', icon: 'SW', color: '#f05138', tag: 'iOS' },
+      { name: 'Kotlin', icon: 'KT', color: '#7f52ff', tag: 'ANDROID' },
       { name: 'Next.js', icon: '▲', color: '#ec4899', tag: 'FRAMEWORK' },
-      { name: 'Tailwind', icon: '≋', color: '#0ea5e9', tag: 'STYLE' },
+      { name: 'Figma', icon: '❖', color: '#f43f5e', tag: 'DESIGN' },
+      { name: 'Tailwind', icon: '≋', color: '#0ea5e9', tag: 'STYLES' },
       { name: 'GraphQL', icon: '◈', color: '#e11d48', tag: 'API' },
-      { name: 'Docker', icon: '🐳', color: '#0284c7', tag: 'OPS' },
-      { name: 'PostgreSQL', icon: '🐘', color: '#6366f1', tag: 'SQL' },
+      { name: 'PostgreSQL', icon: 'PG', color: '#6366f1', tag: 'DATABASE' },
+      { name: 'Docker', icon: 'DK', color: '#0284c7', tag: 'CONTAINER' },
+      { name: 'Kubernetes', icon: 'K8S', color: '#326ce5', tag: 'CLOUD' },
+      { name: 'Redis', icon: 'RD', color: '#dc2626', tag: 'CACHE' },
+      { name: 'Ruby', icon: 'RB', color: '#cc342d', tag: 'BACKEND' },
+      { name: 'Vue.js', icon: 'VUE', color: '#42b883', tag: 'UI' },
     ];
 
     const tokensGroup = new THREE.Group();
@@ -521,7 +531,7 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
 
     // Helper to generate razor-sharp, high-contrast, crystal-clear 1024x512 badge textures
     const createTokenTexture = (techItem: { name: string; icon: string; color: string; tag: string }) => {
-      const cacheKey = `${techItem.name}_${techItem.color}_v3`;
+      const cacheKey = `${techItem.name}_${techItem.color}_v4`;
       if (tokenTextureCache.has(cacheKey)) {
         return tokenTextureCache.get(cacheKey)!;
       }
@@ -564,13 +574,13 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
 
         // Icon inside circle: Pure Solid White
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 96px system-ui, -apple-system, sans-serif';
+        ctx.font = 'bold 88px system-ui, -apple-system, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(techItem.icon, 175, 258);
 
         // Language / Tech Name Text: ULTRA-CRISP BOLD WHITE WITH DARK CONTRAST OUTLINE
-        ctx.font = '900 92px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+        ctx.font = '900 88px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
         
@@ -586,7 +596,7 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
 
         // Category Tag Badge on Top Right
         ctx.fillStyle = techItem.color;
-        ctx.font = 'bold 46px monospace';
+        ctx.font = 'bold 44px monospace';
         ctx.textAlign = 'right';
         ctx.fillText(`[ ${techItem.tag} ]`, 940, 115);
       }
@@ -602,7 +612,7 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
       return tex;
     };
 
-    const numTokens = isSoftwareGl ? 8 : 20; // Balanced, non-cluttered distribution
+    const numTokens = isSoftwareGl ? 10 : 28; // Expansive set of 28 coding languages & tech pods
 
     for (let t = 0; t < numTokens; t++) {
       const techItem = codeTechs[t % codeTechs.length];
@@ -611,7 +621,7 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
       const tokenMat = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
-        opacity: 0.85,
+        opacity: 0.88,
         depthWrite: false,
         side: THREE.DoubleSide,
         toneMapped: false,
@@ -620,12 +630,12 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
       // 4.2 x 2.1 Plane matches 2:1 aspect ratio cleanly
       const tokenMesh = new THREE.Mesh(new THREE.PlaneGeometry(4.2, 2.1), tokenMat);
 
-      // Keep tokens away from center X=0 to preserve clean reading lane in center
+      // Position floating 3D tech badge tokens to float visibly behind translucent glass cards
       const side = t % 2 === 0 ? 1 : -1;
       tokenMesh.position.set(
-        side * (12 + (t % 3) * 6),
-        (Math.random() - 0.5) * 24,
-        18 - (t * 8.5)
+        side * (8.5 + (t % 4) * 3.5),
+        ((t * 3.8) % 26) - 13,
+        18 - (t * 6.2)
       );
 
       tokensGroup.add(tokenMesh);
@@ -937,7 +947,7 @@ export const Webiknows3dScrollExperience: React.FC<Webiknows3dScrollExperiencePr
       {/* Full Page 3D Viewport Canvas */}
       <div
         ref={containerRef}
-        className="fixed inset-0 w-full h-full pointer-events-auto z-0 overflow-hidden cursor-grab active:cursor-grabbing"
+        className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
       />
 
 

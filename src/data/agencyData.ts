@@ -180,69 +180,69 @@ export const SERVICES: Service[] = [
     id: 'figma-design-systems',
     name: 'Figma UI/UX & Design Systems',
     tagline: 'Pixel-perfect component architecture, tokens & interactive wireframes',
-    description: 'We construct production-ready Figma design systems equipped with variables, auto-layout 5.0, responsive grids, dark/light theme tokens, and interactive micro-animation specs.',
+    description: 'Production-ready Figma systems with variables, auto-layout 5.0, responsive grids, and dark/light theme tokens.',
     iconName: 'Figma',
     deliverables: [
-      'Tokenized Color, Radius & Typography Libraries',
-      'Auto-Layout Responsive Component Libraries',
+      'Tokenized Color & Typography Libraries',
+      'Auto-Layout Responsive Components',
       'Interactive High-Fidelity Prototypes',
-      'Design-to-Code Documentation & Handoff Specs'
+      'Design-to-Code Documentation Specs'
     ],
-    figmaFeatures: ['Variables & Modes', 'Component Properties', 'Auto Layout 5', 'Prototyping Smart Animate'],
-    techStack: ['Figma', 'FigJam', 'Tokens Studio', 'Tailwind CSS Mapping'],
+    figmaFeatures: ['Variables & Modes', 'Component Properties', 'Auto Layout 5', 'Smart Animate'],
+    techStack: ['Figma', 'Tokens Studio', 'Tailwind CSS'],
     estimatedTime: '2 - 4 Weeks',
-    typicalRoi: '3.5x Design Output Speed'
+    typicalRoi: '3.5x Design Speed'
   },
   {
     id: 'custom-crm-development',
     name: 'Custom CRM Development & Automations',
     tagline: 'Tailored pipeline engines, automated sales workflows & data synchronization',
-    description: 'Off-the-shelf CRMs slow down specialized workflows. We build custom CRM platforms with bespoke sales pipelines, automated deal scoring, contact histories, and seamless third-party webhooks.',
+    description: 'Bespoke CRM platforms featuring custom sales pipelines, automated deal scoring, and seamless API integrations.',
     iconName: 'LayoutGrid',
     deliverables: [
-      'Kanban & List Pipeline Views with Drag-and-Drop',
-      'Automated Lead Scoring & Email Workflows',
-      'Custom Analytics & Revenue Forecasting Dashboards',
-      'Bi-directional Sync with HubSpot / Salesforce / Stripe'
+      'Kanban & List Pipeline Views',
+      'Automated Lead Scoring & Workflows',
+      'Revenue Forecasting Dashboards',
+      'HubSpot & Stripe Bi-directional Sync'
     ],
-    figmaFeatures: ['Custom CRM Layout Grid', 'Data Density Variants', 'Drag-and-Drop Visual States'],
-    techStack: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Webhooks', 'REST/GraphQL'],
+    figmaFeatures: ['CRM Layout Grid', 'Data Density Variants', 'Drag-and-Drop States'],
+    techStack: ['React', 'Node.js', 'PostgreSQL', 'Webhooks'],
     estimatedTime: '4 - 8 Weeks',
-    typicalRoi: '184% Sales Pipeline Velocity'
+    typicalRoi: '184% Pipeline Velocity'
   },
   {
     id: 'web-saas-engineering',
     name: 'Web Application & SaaS Engineering',
     tagline: 'Lightning-fast React web apps with rich micro-animations & clean code',
-    description: 'We translate complex Figma wireframes into high-performance web applications using modern React, Tailwind CSS, clean modular architecture, and sub-100ms render speeds.',
+    description: 'High-performance web apps built with modern React, Tailwind CSS, and sub-180ms render speeds.',
     iconName: 'Code',
     deliverables: [
-      'Responsive React / TypeScript Frontend Application',
-      'Accessible Component Architecture (WCAG AA)',
-      'Sub-200ms Micro-Interactions & Animated States',
-      'SEO & Performance Optimization (95+ Lighthouse)'
+      'Responsive React Frontend',
+      'WCAG AA Accessible Architecture',
+      'Sub-200ms Micro-Interactions',
+      '95+ Lighthouse Score'
     ],
-    figmaFeatures: ['Component Prop Mapping', 'Breakpoint Frame Specs', 'State Variant Matrices'],
-    techStack: ['React 19', 'TypeScript', 'Tailwind CSS v4', 'Node.js', 'Express'],
+    figmaFeatures: ['Component Prop Mapping', 'Breakpoint Specs', 'State Variant Matrices'],
+    techStack: ['React 19', 'TypeScript', 'Tailwind CSS', 'Node.js'],
     estimatedTime: '4 - 10 Weeks',
-    typicalRoi: '99.9% Uptime & <180ms Latency'
+    typicalRoi: '99.9% Uptime & <180ms'
   },
   {
     id: 'mobile-app-development',
     name: 'Cross-Platform Mobile Apps',
     tagline: 'Native iOS & Android app development with gesture micro-interactions',
-    description: 'From mobile wireframes in Figma to app store deployment, we build responsive mobile applications with smooth gesture controls, haptic visual feedback, and offline persistence.',
+    description: 'Responsive mobile apps featuring smooth gesture controls, haptic feedback, and offline data sync.',
     iconName: 'Smartphone',
     deliverables: [
-      'iOS & Android Cross-Platform Application',
-      'Touch-Optimized Responsive Viewports',
-      'Biometric Security & Offline Data Sync',
-      'App Store & Play Store Publishing Handoff'
+      'iOS & Android Cross-Platform Apps',
+      'Touch-Optimized Viewports',
+      'Biometric Security & Offline Sync',
+      'App Store & Play Store Handoff'
     ],
-    figmaFeatures: ['iOS/Android Frame Specs', 'Gesture Animation Wireframes', 'Mobile Touch Targets'],
-    techStack: ['React Native / Web', 'Tailwind CSS', 'Framer Motion', 'Mobile Push APIs'],
+    figmaFeatures: ['Mobile Frame Specs', 'Gesture Animation Wireframes', 'Touch Targets'],
+    techStack: ['React Native', 'Tailwind CSS', 'Framer Motion'],
     estimatedTime: '6 - 10 Weeks',
-    typicalRoi: '4.9 Star App Rating'
+    typicalRoi: '4.9 Star Rating'
   },
   {
     id: 'custom-software-engineering',
