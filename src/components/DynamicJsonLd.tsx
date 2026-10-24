@@ -235,12 +235,14 @@ export const DynamicJsonLd: React.FC<DynamicJsonLdProps> = ({ currentPage, siteT
     const existingScripts = document.querySelectorAll('script[data-dynamic-json-ld="true"]');
     existingScripts.forEach(script => script.remove());
 
-    // Inject new script tag
-    const scriptTag = document.createElement('script');
-    scriptTag.type = 'application/ld+json';
-    scriptTag.setAttribute('data-dynamic-json-ld', 'true');
-    scriptTag.text = JSON.stringify(schemas, null, 2);
-    document.head.appendChild(scriptTag);
+    // Inject individual script tags for each schema object to ensure Vercel analytics / JSON-LD parsers evaluate @context correctly as objects
+    schemas.forEach(schema => {
+      const scriptTag = document.createElement('script');
+      scriptTag.type = 'application/ld+json';
+      scriptTag.setAttribute('data-dynamic-json-ld', 'true');
+      scriptTag.text = JSON.stringify(schema, null, 2);
+      document.head.appendChild(scriptTag);
+    });
 
     return () => {
       const scripts = document.querySelectorAll('script[data-dynamic-json-ld="true"]');
